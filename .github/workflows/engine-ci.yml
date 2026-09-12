@@ -6,21 +6,32 @@ on:
   pull_request:
 
 jobs:
-  test:
+  engine:
+    name: Soru motoru
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-
-      - name: Motor ve sözleşme testleri
+      - name: Motor, banka ve sözleşme testleri
+        working-directory: engine
         run: npm test
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - name: Katalog üretici testleri
+        working-directory: engine
         run: python3 -m unittest tests.test_build_program_catalog -v
+
+  app:
+    name: Uygulama derlemesi
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npm run build

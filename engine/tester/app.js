@@ -2,7 +2,7 @@
  * Test harness arayüzü. Paketin genel API'sinden başka hiçbir şeye dokunmaz —
  * arkadaşının UI'ı da tam olarak bu yüzeyi kullanacak.
  */
-import { createOverfit, DIMENSIONS, FAMILY_BY_ID } from "../index.js";
+import { createOverfit, DIMENSIONS, FAMILY_BY_ID, toRanks } from "../index.js";
 
 const STORAGE_KEY = "overfit.session.v1";
 const $ = (id) => document.getElementById(id);
@@ -49,7 +49,7 @@ function wire() {
   el.startUnknown.addEventListener("click", () => start("score_unknown", null));
   el.academicContinue.addEventListener("click", () => {
     const rank = Number.parseInt(el.successRank.value, 10);
-    start(pendingAudience, Number.isFinite(rank) && rank > 0 ? { scoreType: el.scoreType.value, rank } : null);
+    start(pendingAudience, Number.isFinite(rank) && rank > 0 ? { ranks: { [el.scoreType.value]: rank } } : null);
   });
   el.academicSkip.addEventListener("click", () => start(pendingAudience, null));
 
@@ -187,8 +187,11 @@ function renderResults() {
     }),
   );
 
+  const siralar = result.academic
+    ? Object.entries(toRanks(result.academic)).map(([tur, sira]) => `${tur} ${fmt.format(sira)}.`).join(" · ")
+    : "";
   el.resultAccessNote.textContent = result.academic
-    ? `${result.academic.scoreType} · ${fmt.format(result.academic.rank)}. sıraya göre erişim hesaplandı. ` +
+    ? `${siralar} sıraya göre erişim hesaplandı. ` +
       "Erişim yalnızca 2026 taban sıralarına bakar, gelecek yılı öngörmez."
     : "Başarı sırası girilmediği için erişim hesaplanmadı; aşağıdaki gruplar yalnızca cevaplarına göre sıralandı.";
 
@@ -212,11 +215,11 @@ function renderResults() {
         const access = group.access;
         const text =
           access.reachable > 0
-            ? `Sıranla erişilebilen ${access.scoreType} programı: ${fmt.format(access.reachable)} / ${fmt.format(access.withRank)}` +
+            ? `Sıranın yettiği program: ${fmt.format(access.reachable)} / ${fmt.format(access.withRank)}` +
               (access.closest ? ` · sıranın yettiği en seçici program: ${access.closest.university} (taban ${fmt.format(access.closest.rank)}.)` : "")
             : access.withRank > 0
-              ? `Bu grupta ${access.scoreType} türünde sıranın yettiği program yok (${fmt.format(access.withRank)} programın taban sırası daha iyi).`
-              : `Bu grup ${group.scoreTypes.join("/")} puanıyla tercih ediliyor; ${access.scoreType} sıranla karşılaştırılamadı.`;
+              ? `Bu grupta sıranın yettiği program yok (${fmt.format(access.withRank)} programın taban sırası daha iyi).`
+              : `Bu grup ${group.scoreTypes.join("/")} puanıyla tercih ediliyor; girdiğin ${access.scoreTypes.join("/")} sırası burada geçerli değil.`;
         nodes.push(span(access.reachable > 0 ? "why" : "why warn", text));
       }
       return li(nodes);
@@ -282,7 +285,7 @@ function renderTester() {
   push("Yol", [
     ["cevaplar", view.answerPath.join(" → ") || "—"],
     ["akış", state.audience],
-    ["akademik", state.academic ? `${state.academic.scoreType} / ${fmt.format(state.academic.rank)}` : "girilmedi"],
+    ["akademik", state.academic ? Object.entries(toRanks(state.academic)).map(([tur, sira]) => `${tur} ${fmt.format(sira)}`).join(", ") : "girilmedi"],
   ]);
 
   el.testerBody.innerHTML = parts.join("");

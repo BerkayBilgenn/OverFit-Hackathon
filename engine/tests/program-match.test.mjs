@@ -54,7 +54,7 @@ test("başarı sırası verilince erişim veriden hesaplanır", () => {
   });
   for (const group of ranked) {
     assert.ok(group.access, group.id);
-    assert.equal(group.access.scoreType, "SAY");
+    assert.deepEqual(group.access.scoreTypes, ["SAY"]);
     assert.ok(group.access.reachable <= group.access.withRank);
     if (group.access.closest) {
       assert.ok(group.access.closest.rank >= academic.rank, `${group.id}: erişilemez program erişilebilir sayıldı`);
@@ -144,4 +144,59 @@ test("burs koşulu devlet programlarını dışarıda bırakmaz", () => {
     familyRanking, groups: catalog.groups, index, limit: 10, filters: { scholarshipOnly: true },
   });
   assert.ok(burslu.reduce((sum, group) => sum + group.access.matching, 0) > 0);
+});
+
+test("girilen puan türüyle tercih edilemeyen grup öne çıkmaz", () => {
+  const familyRanking = engine.rankFamilies(runSession("score_known", () => "a").profile);
+  for (const scoreType of ["SAY", "EA", "SÖZ"]) {
+    const academic = { scoreType, rank: 60000 };
+    const ranked = rankProgramGroups({ familyRanking, groups: catalog.groups, index, academic, limit: 5 });
+    for (const group of ranked) {
+      assert.ok(group.access.eligible > 0,
+        `${scoreType}: "${group.name}" bu puan türüyle tercih edilemiyor ama ilk 5'te`);
+      assert.deepEqual(group.access.scoreTypes, [scoreType]);
+    }
+  }
+});
+
+test("uygun olmayan grup listeden silinmez, sadece geriye iter", () => {
+  const familyRanking = engine.rankFamilies(runSession("score_known", () => "b").profile);
+  const academic = { scoreType: "DİL", rank: 20000 };
+  const hepsi = rankProgramGroups({ familyRanking, groups: catalog.groups, index, academic, limit: 634 });
+
+  assert.equal(hepsi.length, 634, "tüm gruplar sıralanabilir kalmalı");
+  const uygunOlmayan = hepsi.filter((group) => group.access.eligible === 0);
+  assert.ok(uygunOlmayan.length > 0, "DİL için uygun olmayan gruplar var");
+  console.log(`    DİL: ${634 - uygunOlmayan.length} uygun / ${uygunOlmayan.length} uygun değil`);
+
+  // Uygun olanların tamamı, uygun olmayanların tamamından önce gelir.
+  const ilkUygunsuz = hepsi.findIndex((group) => group.access.eligible === 0);
+  const sonUygun = hepsi.map((group) => group.access.eligible > 0).lastIndexOf(true);
+  assert.ok(ilkUygunsuz > sonUygun, "uygun olmayan bir grup uygun olanların arasına giremez");
+  assert.equal(ilkUygunsuz, 634 - uygunOlmayan.length);
+});
+
+test("birden çok puan türü girilebilir, her program kendi türüyle karşılaştırılır", () => {
+  const familyRanking = engine.rankFamilies(runSession("score_known", () => "a").profile);
+  const tekli = rankProgramGroups({
+    familyRanking, groups: catalog.groups, index, limit: 20,
+    academic: { ranks: { SAY: 65000 } },
+  });
+  const ikili = rankProgramGroups({
+    familyRanking, groups: catalog.groups, index, limit: 20,
+    academic: { ranks: { SAY: 65000, TYT: 40000 } },
+  });
+  const say = (list) => list.reduce((sum, group) => sum + group.access.eligible, 0);
+  console.log(`    yalnız SAY: ${say(tekli)} uygun program · SAY+TYT: ${say(ikili)} uygun program`);
+  assert.ok(say(ikili) > say(tekli), "ikinci puan türü havuzu genişletmeli");
+  for (const group of ikili) {
+    for (const type of group.access.scoreTypes) assert.ok(["SAY", "TYT"].includes(type));
+  }
+});
+
+test("eski tek puan türü biçimi çalışmaya devam eder", () => {
+  const familyRanking = engine.rankFamilies(runSession("score_known", () => "a").profile);
+  const eski = rankProgramGroups({ familyRanking, groups: catalog.groups, index, limit: 5, academic: { scoreType: "EA", rank: 50000 } });
+  const yeni = rankProgramGroups({ familyRanking, groups: catalog.groups, index, limit: 5, academic: { ranks: { EA: 50000 } } });
+  assert.deepEqual(eski.map((group) => group.id), yeni.map((group) => group.id));
 });

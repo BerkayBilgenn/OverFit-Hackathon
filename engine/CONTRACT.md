@@ -21,7 +21,11 @@ import { createOverfit } from "@overfit/soru-motoru";
 // data/ klasörünü statik olarak servis et (Next: public/overfit-data)
 const overfit = await createOverfit({ dataUrl: "/overfit-data" });
 
-let state = overfit.start({ audience: "score_known", academic: { scoreType: "SAY", rank: 65000 } });
+let state = overfit.start({
+  audience: "score_known",
+  // Aday birden çok puan türüne girmiş olabilir; hepsini ver.
+  academic: { ranks: { SAY: 65000, TYT: 41000 } },
+});
 
 const q = overfit.question(state);
 // { id, text, stage, questionFamily, step: 1, total: 10, canGoBack: false,
@@ -86,7 +90,14 @@ Dil eşleşmesi ön ekle yapılır ve `"Türkçe"` seçilirse dil alanı boş b�
 kayıtlar da dahil edilir — kaynakta bazı Türkçe programlarda bu alan yok.
 
 `group.access` başarı sırası ya da koşul verildiyse dolu:
-`{ scoreType, userRank, reachable, withRank, withoutRank, matching, sampled, filters, closest }`.
+`{ scoreTypes, userRanks, reachable, withRank, withoutRank, matching, eligible, sampled, filters, closest }`.
+
+`eligible`, adayın **sırasını girdiği** puan türleriyle tercih edilebilen
+program sayısıdır. Her program yalnızca kendi puan türüyle karşılaştırılır:
+SAY sırası bir TYT programına dair hiçbir şey söylemez. Aday TYT sırasını da
+girdiyse ön lisans programları da hesaba katılır. `eligible === 0` olan bir grup
+sıralamada geriye itilir ama **listeden silinmez** — arayüzde "bu grup şu puan
+türüyle tercih ediliyor" diye açıklanmalı, sessizce gizlenmemeli.
 
 ## Uyulması gerekenler
 

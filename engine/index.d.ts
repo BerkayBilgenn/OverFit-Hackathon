@@ -16,11 +16,19 @@ export type DimensionId =
 
 export type Profile = Record<DimensionId, number>;
 
+/**
+ * Adayın başarı sıraları. Aday birden çok puan türüne girmiş olabilir ve her
+ * program yalnızca kendi puan türüyle tercih edilir.
+ * Küçük sayı = daha iyi derece.
+ */
 export interface Academic {
-  scoreType: ScoreType;
-  /** Başarı sırası. Küçük sayı = daha iyi derece. */
-  rank: number;
+  ranks?: Partial<Record<ScoreType, number>>;
+  /** Tek puan türü için kısa biçim; `ranks` ile aynı anlama gelir. */
+  scoreType?: ScoreType;
+  rank?: number;
 }
+
+export function toRanks(academic: Academic | null): Partial<Record<ScoreType, number>> | null;
 
 /** Tercih koşulları. Hiçbiri zorunlu değil; verilmeyen alan süzmez. */
 export interface Filters {
@@ -83,8 +91,9 @@ export interface Family {
 }
 
 export interface Access {
-  scoreType: ScoreType | null;
-  userRank: number | null;
+  /** Adayın sırasının bilindiği puan türleri. */
+  scoreTypes: ScoreType[];
+  userRanks: Partial<Record<ScoreType, number>> | null;
   /** Sıranın yettiği program sayısı. */
   reachable: number;
   /** Taban sırası yayımlanmış program sayısı. */
@@ -93,9 +102,11 @@ export interface Access {
   withoutRank: number;
   /** Tercih koşullarını geçen program sayısı. */
   matching: number;
+  /** Adayın puan türüyle (veya TYT ile) tercih edebileceği program sayısı. */
+  eligible: number;
   sampled: number;
   filters: Filters | null;
-  closest: { rank: number; university: string; city: string; code: string } | null;
+  closest: { rank: number; scoreType: ScoreType; university: string; city: string; code: string } | null;
 }
 
 export interface ProgramGroup {
