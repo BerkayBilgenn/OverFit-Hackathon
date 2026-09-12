@@ -113,8 +113,8 @@ select:focus-visible, input:focus-visible { outline: 3px solid var(--accent); ou
 
 .families, .groups { margin: 0; padding-left: 20px; display: grid; gap: 14px; }
 .families li strong, .groups li strong { font-weight: 600; }
-.groups .meta { color: var(--muted); font-size: 0.85rem; display: block; margin-top: 3px; }
-.groups .why { font-size: 0.85rem; margin-top: 4px; }
+.families .meta, .groups .meta { color: var(--muted); font-size: 0.85rem; display: block; margin-top: 3px; }
+.families .why, .groups .why { display: block; font-size: 0.85rem; margin-top: 4px; }
 .groups .warn { color: var(--warn); }
 .mismatch { color: var(--muted); font-size: 0.9rem; padding-left: 20px; margin: 0; }
 
