@@ -32,6 +32,7 @@ export function ScoreForm({ onExit, onComplete }: ScoreFormProps) {
     if (!selected.length) return setError("En az bir puan türü seçmelisin.");
     if (selected.some((type) => !rows[type].score || !rows[type].rank)) return setError("Seçtiğin her puan türü için puan ve sıralama girmelisin.");
     if (selected.some((type) => Number(rows[type].score) <= 0 || Number(rows[type].rank) <= 0)) return setError("Puan ve sıralama sıfırdan büyük olmalı.");
+    if (selected.some((type) => Number(rows[type].score) > 500)) return setError("Puan 500'den büyük olamaz.");
 
     const scores = Object.fromEntries(selected.map((type) => [type, {
       score: Number(rows[type].score),
@@ -66,7 +67,7 @@ export function ScoreForm({ onExit, onComplete }: ScoreFormProps) {
           <div className="score-row score-labels"><span>Puan türü</span><span>Puan</span><span>Başarı sırası</span></div>
           {SCORE_TYPES.map((type) => <div className={`score-row ${rows[type].active ? "selected" : ""}`} key={type}>
             <label className="score-toggle"><input type="checkbox" checked={rows[type].active} onChange={(event) => update(type, "active", event.target.checked)} /><i /><strong>{type}</strong></label>
-            <input aria-label={`${type} puanı`} type="number" min="1" step="0.001" disabled={!rows[type].active} value={rows[type].score} onChange={(event) => update(type, "score", event.target.value)} placeholder="örn. 412,5" />
+            <input aria-label={`${type} puanı`} type="number" min="1" max="500" step="0.001" disabled={!rows[type].active} value={rows[type].score} onChange={(event) => update(type, "score", event.target.value)} placeholder="örn. 412,5" />
             <input aria-label={`${type} sıralaması`} type="number" min="1" disabled={!rows[type].active} value={rows[type].rank} onChange={(event) => update(type, "rank", event.target.value)} placeholder="örn. 32.500" />
           </div>)}
         </div>
