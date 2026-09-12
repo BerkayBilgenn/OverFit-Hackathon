@@ -25,7 +25,32 @@ export function indexPrograms(programsTable) {
   return { columns, byGroup };
 }
 
-export function rankProgramGroups({ familyRanking, groups, index, academic = null, limit = 6, maxPerFamily = 2 }) {
+/**
+ * Kullanıcının tercih koşulları. Hepsi isteğe bağlı; verilmeyen alan süzmez.
+ * Koşullar bir grubu ASLA listeden atmaz, yalnızca sıralamada geriye iter —
+ * tek bir tercih hiçbir bölümü kalıcı olarak elemez.
+ */
+function matchesFilters(row, columns, filters) {
+  if (!filters) return true;
+  if (filters.cities?.length && !filters.cities.includes(row[columns.city])) return false;
+  if (filters.universityType && row[columns.uniType] !== filters.universityType) return false;
+  if (filters.language) {
+    const language = row[columns.lang] ?? "";
+    // Türkçe programların bir kısmında dil alanı boş bırakılmış (kaynak eksiği).
+    const ok = filters.language === "Türkçe"
+      ? language === "Türkçe" || language === ""
+      : language.startsWith(filters.language);
+    if (!ok) return false;
+  }
+  if (filters.scholarshipOnly) {
+    // Devlet programlarında öğrenim ücreti yok; tam burslu vakıf programları da sayılır.
+    const free = row[columns.uniType] === "DEVLET" || row[columns.burs] === "Burslu";
+    if (!free) return false;
+  }
+  return true;
+}
+
+export function rankProgramGroups({ familyRanking, groups, index, academic = null, filters = null, limit = 6, maxPerFamily = 2 }) {
   const familyScore = Object.fromEntries(familyRanking.map((family) => [family.id, family.score]));
   const maxCount = Math.max(...groups.map((group) => group.programCount));
 
@@ -34,10 +59,11 @@ export function rankProgramGroups({ familyRanking, groups, index, academic = nul
     // Çok az programı olan gruplar sonuç ekranında kullanıcıya yardımcı olmuyor;
     // yaygınlık küçük ve şeffaf bir ağırlık olarak eklenir, sıralamayı ele geçirmez.
     const availability = Math.log10(1 + group.programCount) / Math.log10(1 + maxCount);
-    const access = academic ? accessFor(group, index, academic) : null;
+    const access = academic || filters ? accessFor(group, index, academic, filters) : null;
 
     let score = persona + 0.12 * availability;
     if (access && access.reachable === 0 && access.withRank > 0) score -= 0.25;
+    if (access && filters && access.matching === 0) score -= 0.4;
 
     return {
       id: group.id,
@@ -74,16 +100,19 @@ export function rankProgramGroups({ familyRanking, groups, index, academic = nul
   return picked;
 }
 
-function accessFor(group, index, academic) {
+function accessFor(group, index, academic, filters) {
   const rows = index.byGroup.get(group.id) ?? [];
   const { columns } = index;
   let reachable = 0;
   let withRank = 0;
   let withoutRank = 0;
+  let matching = 0;
   let closest = null;
 
   for (const row of rows) {
-    if (row[columns.scoreType] !== academic.scoreType) continue;
+    if (!matchesFilters(row, columns, filters)) continue;
+    matching += 1;
+    if (!academic || row[columns.scoreType] !== academic.scoreType) continue;
     const rank = row[columns.rank];
     if (rank === null || rank === undefined) {
       withoutRank += 1;
@@ -99,12 +128,14 @@ function accessFor(group, index, academic) {
   }
 
   return {
-    scoreType: academic.scoreType,
-    userRank: academic.rank,
+    scoreType: academic?.scoreType ?? null,
+    userRank: academic?.rank ?? null,
     reachable,
     withRank,
     withoutRank,
+    matching,
     sampled: rows.length,
+    filters,
     closest,
   };
 }

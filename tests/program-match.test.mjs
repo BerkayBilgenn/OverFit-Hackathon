@@ -106,3 +106,42 @@ test("sonuç listesi tek aileye kilitlenmez", () => {
   assert.ok(new Set(families).size >= 3, "en az üç farklı aile görünmeli");
   assert.equal(ranked.length, 5);
 });
+
+test("tercih koşulları erişimi daraltır ama grubu elemez", () => {
+  const state = runSession("score_known", () => "a", { scoreType: "SAY", rank: 65000 });
+  const familyRanking = engine.rankFamilies(state.profile);
+  const academic = { scoreType: "SAY", rank: 65000 };
+
+  const hepsi = rankProgramGroups({ familyRanking, groups: catalog.groups, index, academic, limit: 8 });
+  const ankara = rankProgramGroups({
+    familyRanking, groups: catalog.groups, index, academic, limit: 8,
+    filters: { cities: ["ANKARA"], universityType: "DEVLET" },
+  });
+
+  assert.equal(ankara.length, 8, "koşul grupları listeden silmez");
+  const toplam = (list) => list.reduce((sum, group) => sum + group.access.reachable, 0);
+  assert.ok(toplam(ankara) < toplam(hepsi), "koşullu erişim daha dar olmalı");
+  for (const group of ankara) assert.ok(group.access.matching <= group.access.sampled);
+});
+
+test("dil filtresi boş bırakılmış Türkçe kayıtları kaybetmez", () => {
+  const familyRanking = engine.rankFamilies(runSession("score_unknown", () => "b").profile);
+  const turkce = rankProgramGroups({
+    familyRanking, groups: catalog.groups, index, limit: 10, filters: { language: "Türkçe" },
+  });
+  const ingilizce = rankProgramGroups({
+    familyRanking, groups: catalog.groups, index, limit: 10, filters: { language: "İngilizce" },
+  });
+  const say = (list) => list.reduce((sum, group) => sum + group.access.matching, 0);
+  console.log(`    Türkçe eşleşen: ${say(turkce)} · İngilizce eşleşen: ${say(ingilizce)}`);
+  assert.ok(say(turkce) > say(ingilizce), "Türkçe program sayısı daha yüksek olmalı");
+  assert.ok(say(ingilizce) > 0);
+});
+
+test("burs koşulu devlet programlarını dışarıda bırakmaz", () => {
+  const familyRanking = engine.rankFamilies(runSession("score_unknown", () => "a").profile);
+  const burslu = rankProgramGroups({
+    familyRanking, groups: catalog.groups, index, limit: 10, filters: { scholarshipOnly: true },
+  });
+  assert.ok(burslu.reduce((sum, group) => sum + group.access.matching, 0) > 0);
+});

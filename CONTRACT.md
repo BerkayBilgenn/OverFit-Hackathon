@@ -6,8 +6,11 @@ neye ihtiyacın varsa onu veriyor, eksik bir şey varsa issue aç.
 
 ## Kurulum
 
-```bash
-npm i github:KULLANICI/overfit-soru-motoru
+Aynı repoda `engine/` klasöründe. TypeScript bildirimleri `engine/index.d.ts`
+içinde; `allowJs` gerekmez.
+
+```ts
+import { createOverfit } from "../../engine/index.js";
 ```
 
 ## En kısa kullanım
@@ -46,7 +49,7 @@ const overfit = await createOverfit({ data: { questions, groups, programs: null 
 | Çağrı | Döner | Not |
 |---|---|---|
 | `createOverfit({ dataUrl })` | `overfit` | `{ data }` ile hazır JSON da verilebilir |
-| `overfit.start({ audience, academic })` | `state` | `audience`: `"score_known"` \| `"score_unknown"` |
+| `overfit.start({ audience, academic, filters })` | `state` | `audience`: `"score_known"` \| `"score_unknown"` |
 | `overfit.question(state)` | soru nesnesi \| `null` | Bitmişse `null` |
 | `overfit.answer(state, "a"\|"b")` | yeni `state` | Girdi **değişmez**, yeni nesne döner |
 | `overfit.back(state)` | yeni `state` | İlk adımda aynı state döner |
@@ -71,8 +74,19 @@ const overfit = await createOverfit({ data: { questions, groups, programs: null 
 }
 ```
 
-`group.access` yalnızca başarı sırası girildiyse dolu:
-`{ scoreType, userRank, reachable, withRank, withoutRank, sampled, closest }`.
+`filters` ile tercih koşulları geçilebilir — hiçbiri zorunlu değil:
+
+```js
+{ cities: ["İSTANBUL"], universityType: "DEVLET", language: "İngilizce", scholarshipOnly: true }
+```
+
+Koşullar bir bölüm grubunu **listeden silmez**, yalnızca sıralamada geriye iter.
+`scholarshipOnly` devlet programlarını da kapsar (öğrenim ücreti yok).
+Dil eşleşmesi ön ekle yapılır ve `"Türkçe"` seçilirse dil alanı boş bırakılmış
+kayıtlar da dahil edilir — kaynakta bazı Türkçe programlarda bu alan yok.
+
+`group.access` başarı sırası ya da koşul verildiyse dolu:
+`{ scoreType, userRank, reachable, withRank, withoutRank, matching, sampled, filters, closest }`.
 
 ## Uyulması gerekenler
 

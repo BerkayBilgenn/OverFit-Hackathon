@@ -59,7 +59,7 @@ test("results() yapılandırılmış sonuç ve uyarılar döner", async () => {
 
   const result = overfit.results(state);
   assert.deepEqual(Object.keys(result).sort(), [
-    "academic", "allFamilies", "families", "groups", "signals", "summaryText", "warnings",
+    "academic", "allFamilies", "families", "filters", "groups", "signals", "summaryText", "warnings",
   ]);
   assert.equal(result.families.length, 3);
   assert.equal(result.groups.length, 5);
@@ -108,4 +108,21 @@ test("bozuk soru kaydı uygulamayı durdurmaz", async () => {
   let state = overfit.start({ audience: "score_unknown" });
   while (!overfit.isFinished(state)) state = overfit.answer(state, "a");
   assert.equal(state.answers.length, 10);
+});
+
+test("tercih koşulları oturumda taşınır ve sonuca yansır", async () => {
+  const overfit = await api.createOverfit({ data });
+  const filters = { cities: ["İSTANBUL"], universityType: "VAKIF", language: "İngilizce", scholarshipOnly: true };
+  let state = overfit.start({ audience: "score_known", academic: { scoreType: "SAY", rank: 40000 }, filters });
+  assert.deepEqual(state.filters, filters);
+
+  while (!overfit.isFinished(state)) state = overfit.answer(state, "a");
+  assert.deepEqual(state.filters, filters, "koşullar 10 adım boyunca korunmalı");
+
+  const result = overfit.results(state);
+  assert.deepEqual(result.filters, filters);
+  for (const group of result.groups) assert.ok(group.access, "koşul varsa erişim bloğu hesaplanır");
+
+  const restored = overfit.restore(JSON.parse(JSON.stringify(state)));
+  assert.deepEqual(restored.filters, filters, "geri yüklemede koşullar kaybolmamalı");
 });

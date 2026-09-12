@@ -50,6 +50,7 @@ export async function createOverfit({ data = null, dataUrl = null, withPrograms 
           groups: catalog.groups,
           index: programIndex,
           academic: state.academic,
+          filters: state.filters ?? null,
           limit,
         })
       : [];
@@ -85,6 +86,7 @@ export async function createOverfit({ data = null, dataUrl = null, withPrograms 
       allFamilies: families,
       groups,
       academic: state.academic,
+      filters: state.filters ?? null,
       warnings,
     };
   }
@@ -108,7 +110,7 @@ export async function createOverfit({ data = null, dataUrl = null, withPrograms 
     source: catalog.source,
     hasPrograms: Boolean(programIndex),
 
-    start: ({ audience, academic = null }) => engine.createSession({ audience, academic }),
+    start: ({ audience, academic = null, filters = null }) => engine.createSession({ audience, academic, filters }),
     answer: (state, optionId) => engine.answer(state, optionId),
     back: (state) => engine.goBack(state),
     changeAnswer: (state, index, optionId) => engine.changeAnswer(state, index, optionId),
@@ -123,7 +125,7 @@ export async function createOverfit({ data = null, dataUrl = null, withPrograms 
       if (!saved || saved.version !== STATE_VERSION || !Array.isArray(saved.answers)) return null;
       return saved.answers.reduce(
         (state, entry) => (state.currentQuestionId === entry.questionId ? engine.answer(state, entry.optionId) : state),
-        engine.createSession({ audience: saved.audience, academic: saved.academic ?? null }),
+        engine.createSession({ audience: saved.audience, academic: saved.academic ?? null, filters: saved.filters ?? null }),
       );
     },
 

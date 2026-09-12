@@ -5,13 +5,14 @@
   "type": "module",
   "description": "OverFit YKS adaptif soru bankası ve kariyer/bölüm eşleştirme motoru",
   "main": "index.js",
+  "types": "index.d.ts",
   "exports": {
     ".": "./index.js",
     "./data/questions.tr.json": "./data/questions.tr.json",
     "./data/program-groups.json": "./data/program-groups.json",
     "./data/programs.min.json": "./data/programs.min.json"
   },
-  "files": ["index.js", "src", "data", "README.md", "CONTRACT.md"],
+  "files": ["index.js", "index.d.ts", "src", "data", "README.md", "CONTRACT.md"],
   "sideEffects": false,
   "engines": { "node": ">=20" },
   "scripts": {

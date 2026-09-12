@@ -192,11 +192,11 @@ export function createEngine(bank) {
     return state;
   }
 
-  function createSession({ audience, academic = null }) {
+  function createSession({ audience, academic = null, filters = null }) {
     if (audience !== "score_known" && audience !== "score_unknown") {
       throw new Error(`Bilinmeyen akış: ${audience}`);
     }
-    return rebuild({ audience, academic }, []);
+    return rebuild({ audience, academic, filters }, []);
   }
 
   function answer(state, optionId) {
