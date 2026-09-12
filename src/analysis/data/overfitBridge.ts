@@ -58,9 +58,14 @@ const UNIVERSITY_TYPES: Record<string, Filters["universityType"]> = {
 export function toFilters(preferences: Preferences | undefined): Filters | null {
   if (!preferences) return null;
 
-  const rawCities = preferences.move === "no"
-    ? [preferences.city]
-    : [preferences.city, ...(preferences.targetCities ?? "").split(/[,;/]/)];
+  // "Türkiye geneli" alanın dokunulmamış varsayılanıdır ve "sınırlama yok" anlamına gelir;
+  // gerçek bir şehir adı gibi filtreye eklenirse sonuçlar yanlışlıkla tek şehre daralır.
+  const nationwide = preferences.move === "yes" && /türkiye geneli/i.test(preferences.targetCities ?? "");
+  const rawCities = nationwide
+    ? []
+    : preferences.move === "no"
+      ? [preferences.city]
+      : [preferences.city, ...(preferences.targetCities ?? "").split(/[,;/]/)];
   const cities = rawCities
     .map((city) => city.trim().toLocaleUpperCase("tr-TR"))
     .filter((city) => city.length > 1);
