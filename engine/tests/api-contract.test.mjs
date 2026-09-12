@@ -59,7 +59,8 @@ test("results() yapılandırılmış sonuç ve uyarılar döner", async () => {
 
   const result = overfit.results(state);
   assert.deepEqual(Object.keys(result).sort(), [
-    "academic", "allFamilies", "families", "filters", "groups", "signals", "summaryText", "warnings",
+    "academic", "allFamilies", "families", "filters", "groups", "missingScoreTypes",
+    "signals", "summaryText", "warnings",
   ]);
   assert.equal(result.families.length, 3);
   assert.equal(result.groups.length, 5);
@@ -125,4 +126,36 @@ test("tercih koşulları oturumda taşınır ve sonuca yansır", async () => {
 
   const restored = overfit.restore(JSON.parse(JSON.stringify(state)));
   assert.deepEqual(restored.filters, filters, "geri yüklemede koşullar kaybolmamalı");
+});
+
+test("profilin işaret ettiği ama sırası girilmeyen puan türleri bildirilir", async () => {
+  const overfit = await api.createOverfit({ data });
+  // Yalnızca SAY girilmiş bir aday: EA/SÖZ ile açılan alanlar listeye giremez.
+  let state = overfit.start({ audience: "score_known", academic: { ranks: { SAY: 30000 } } });
+  while (!overfit.isFinished(state)) state = overfit.answer(state, "a");
+
+  const result = overfit.results(state);
+  assert.ok(Array.isArray(result.missingScoreTypes));
+  for (const item of result.missingScoreTypes) {
+    assert.ok(item.programCount > 0);
+    assert.notEqual(item.scoreType, "SAY", "girilen tür eksik sayılmamalı");
+    assert.ok(result.warnings.some((text) => text.includes(item.scoreType)),
+      `${item.scoreType} için uyarı metni üretilmeli`);
+  }
+  console.log(`    SAY-only aday için eksik türler: ${result.missingScoreTypes.map((i) => `${i.scoreType} (${i.programCount})`).join(", ") || "yok"}`);
+});
+
+test("tüm puan türleri girilirse eksik tür uyarısı çıkmaz", async () => {
+  const overfit = await api.createOverfit({ data });
+  const ranks = { SAY: 30000, EA: 30000, "SÖZ": 30000, "DİL": 30000, TYT: 30000 };
+  let state = overfit.start({ audience: "score_known", academic: { ranks } });
+  while (!overfit.isFinished(state)) state = overfit.answer(state, "b");
+  assert.deepEqual(overfit.results(state).missingScoreTypes, []);
+});
+
+test("sıra girilmediyse eksik tür uyarısı üretilmez", async () => {
+  const overfit = await api.createOverfit({ data });
+  let state = overfit.start({ audience: "score_unknown" });
+  while (!overfit.isFinished(state)) state = overfit.answer(state, "a");
+  assert.deepEqual(overfit.results(state).missingScoreTypes, []);
 });

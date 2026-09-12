@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "npm run test:engine",
+    "test:engine": "node --test engine/tests/*.test.mjs",
+    "test:catalog": "cd engine && python3 -m unittest tests.test_build_program_catalog",
+    "tester": "python3 -m http.server 4173 --directory engine"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
@@ -35,5 +39,8 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
     "vite": "^7.0.4"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

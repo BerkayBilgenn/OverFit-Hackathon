@@ -9,7 +9,7 @@
  *   const overfit = await createOverfit({ data: { questions, groups, programs } });
  */
 import { createEngine, SESSION_LENGTH, STATE_VERSION, topSignals } from "./question-engine.js";
-import { indexPrograms, rankProgramGroups } from "./program-match.js";
+import { indexPrograms, rankProgramGroups, toRanks } from "./program-match.js";
 import { FAMILY_BY_ID } from "./career-families.js";
 import { DIMENSIONS } from "./dimensions.js";
 import { fetchData } from "./data-loader.js";
@@ -55,9 +55,33 @@ export async function createOverfit({ data = null, dataUrl = null, withPrograms 
         })
       : [];
 
+  /**
+   * Profilin işaret ettiği alanlar hangi puan türüyle açılıyor da adayın
+   * o türde sırası yok? Bunu söylemezsek kullanıcı, cevaplarıyla alakasız
+   * görünen bir liste görüyor ve nedenini anlamıyor.
+   */
+  function missingScoreTypes(families, ranks) {
+    if (!ranks || !programIndex) return [];
+    const girilen = new Set(Object.keys(ranks));
+    const ustAileler = new Set(families.slice(0, 3).map((family) => family.id));
+    const sayim = new Map();
+    for (const group of catalog.groups) {
+      if (!ustAileler.has(group.family)) continue;
+      for (const scoreType of group.scoreTypes) {
+        if (girilen.has(scoreType) || scoreType === "?") continue;
+        sayim.set(scoreType, (sayim.get(scoreType) ?? 0) + group.programCount);
+      }
+    }
+    return [...sayim.entries()]
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, 2)
+      .map(([scoreType, programCount]) => ({ scoreType, programCount }));
+  }
+
   function results(state, { familyLimit = 3, groupLimit = 5 } = {}) {
     const families = engine.rankFamilies(state.profile);
     const groups = rankGroups(state, groupLimit);
+    const eksikTurler = missingScoreTypes(families, toRanks(state.academic));
     const signals = topSignals(state.profile, 5).map((signal) => ({
       ...signal,
       label: DIMENSIONS[signal.dimension],
@@ -74,6 +98,12 @@ export async function createOverfit({ data = null, dataUrl = null, withPrograms 
       warnings.push(`Hiç ölçülmeyen boyutlar: ${unmeasured.map(([key]) => DIMENSIONS[key]).join(", ")}.`);
     }
     if (!state.academic) warnings.push("Başarı sırası girilmediği için bu liste erişilebilirliği dikkate almıyor.");
+    for (const { scoreType, programCount } of eksikTurler) {
+      warnings.push(
+        `Profiline yakın alanlarda ${programCount.toLocaleString("tr-TR")} program ${scoreType} puanıyla tercih ediliyor. ` +
+        `${scoreType} sıranı girmediğin için bunlar listede yok.`,
+      );
+    }
     if (!programIndex) warnings.push("Program tablosu yüklenmediği için bölüm grupları hesaplanmadı.");
     warnings.push("Sorular henüz editoryal incelemeden geçmedi (tümü draft).");
 
@@ -87,6 +117,7 @@ export async function createOverfit({ data = null, dataUrl = null, withPrograms 
       groups,
       academic: state.academic,
       filters: state.filters ?? null,
+      missingScoreTypes: eksikTurler,
       warnings,
     };
   }

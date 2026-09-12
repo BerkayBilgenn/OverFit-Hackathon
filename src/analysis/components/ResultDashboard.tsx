@@ -61,6 +61,12 @@ export function ResultDashboard({ mode, context, analysis, onRestart, onReview }
               ? `${Object.entries(academic.ranks).map(([type, rank]) => `${type} ${sayi.format(rank as number)}.`).join(" · ")} başarı sırasına göre 2026 taban sıralarıyla karşılaştırıldı.`
               : "Yönelim gerekçesine göre sıralandı; başarı sırası girilmediği için erişim hesaplanmadı."}
           </p>
+          {results && results.missingScoreTypes.length > 0 && <p className="muted access-hint">
+            {results.missingScoreTypes
+              .map((item) => `${item.scoreType} puanıyla açılan ${sayi.format(item.programCount)} program`)
+              .join(" ve ")} profiline yakın duruyor.
+            {" "}Bu türlerde sıranı girersen onları da karşılaştırabilirim.
+          </p>}
           <div className="program-list">
             {(results?.groups ?? []).map((group, index) => <div key={group.id}>
               <b>0{index + 1}</b>
