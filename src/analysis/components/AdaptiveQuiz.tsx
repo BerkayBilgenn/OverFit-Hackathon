@@ -3,6 +3,7 @@ import type { OptionId, Overfit, SessionState } from "../../../engine/index.js";
 import { loadOverfit, toAcademic, toDimensionScores, toFilters } from "../data/overfitBridge";
 import type { DimensionScores } from "../data/questionPool";
 import type { AnalysisContext } from "../types";
+import { RobotCompanion } from "./RobotCompanion";
 
 export type AnalysisResult = {
   /** Motorun oturum durumu — düz JSON, sonuç ekranı bunun üstünden çalışır. */
@@ -100,20 +101,23 @@ export function AdaptiveQuiz({ mode, context, initialAnalysis, onBack, onComplet
       <button type="button" onClick={goBack}>← Geri</button>
       <span>{question.step} / {question.total}</span>
     </div>
-    <article className="analysis-card quiz-card">
-      <div className="progress"><i style={{ width: `${(question.step / question.total) * 100}%` }} /></div>
-      <div className="eyebrow">ADAPTİF YÖNELİM ANALİZİ</div>
-      <h1>{question.text}</h1>
-      <p className="quiz-help">Sana daha yakın olan seçeneği işaretle; doğru veya yanlış cevap yok.</p>
-      <div className="answers">
-        {question.options.map((option, optionIndex) => <button
-          className={selected === option.id ? "selected" : ""}
-          type="button"
-          key={option.id}
-          onClick={() => choose(optionIndex)}
-        ><i>✓</i>{option.text}</button>)}
-      </div>
-      <div className="context"><span>{scoreLabel}</span><span>{context.preferences?.city}</span><span>Kişiselleştirilmiş yol</span></div>
-    </article>
+    <div className="quiz-stage">
+      <RobotCompanion />
+      <article className="analysis-card quiz-card speech">
+        <div className="progress"><i style={{ width: `${(question.step / question.total) * 100}%` }} /></div>
+        <div className="eyebrow">ROTA SORUYOR</div>
+        <h1>{question.text}</h1>
+        <p className="quiz-help">Sana daha yakın olan seçeneği işaretle; doğru veya yanlış cevap yok.</p>
+        <div className="answers">
+          {question.options.map((option, optionIndex) => <button
+            className={selected === option.id ? "selected" : ""}
+            type="button"
+            key={option.id}
+            onClick={() => choose(optionIndex)}
+          ><i>✓</i>{option.text}</button>)}
+        </div>
+        <div className="context"><span>{scoreLabel}</span><span>{context.preferences?.city}</span><span>Kişiselleştirilmiş yol</span></div>
+      </article>
+    </div>
   </section>;
 }
