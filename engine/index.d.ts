@@ -131,6 +131,11 @@ export interface Results {
   groups: ProgramGroup[];
   academic: Academic | null;
   filters: Filters | null;
+  /**
+   * Profilin işaret ettiği alanların açıldığı ama adayın sırasını girmediği
+   * puan türleri. Boş değilse arayüz bunu kullanıcıya söylemeli.
+   */
+  missingScoreTypes: Array<{ scoreType: ScoreType; programCount: number }>;
   /** Ekranda gösterilmesi gereken dürüstlük uyarıları. */
   warnings: string[];
 }
