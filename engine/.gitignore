@@ -1,0 +1,13 @@
+# Bağımlılıklar
+node_modules/
+
+# Kaynak arşiv depoya girmez: YÖK Atlas ZIP'i dışarıda, değişmeden durur.
+*.zip
+yokatlas-*/
+
+# Araç ve işletim sistemi
+.claude/
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
