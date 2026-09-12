@@ -1,0 +1,3685 @@
+[
+ {
+  "id": "ilgi_01",
+  "text": "Boş bir cumartesin var. Hangisi sana daha çekici geliyor?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bir aleti açıp nasıl çalıştığına bakmak",
+    "scoreEffects": {
+     "sistem": 2,
+     "nesne": 2
+    },
+    "nextFocus": [
+     "nesne",
+     "sistem"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Tanımadığın insanların olduğu bir etkinliğe gitmek",
+    "scoreEffects": {
+     "insan": 2,
+     "belirsiz": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "insan"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "insan",
+   "nesne",
+   "sistem"
+  ],
+  "programFamilies": [
+   "muhendislik_teknoloji",
+   "tarim_gida_cevre",
+   "uygulamali_teknik"
+  ],
+  "questionFamily": "ilgi",
+  "reversePairId": null,
+  "priority": 50,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ilgi_02",
+  "text": "Okulda bir proje seçeceksin. Hangisini alırsın?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bir anketin sonuçlarını tablo ve grafiğe dökmek",
+    "scoreEffects": {
+     "veri": 2,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "veri"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Aynı konuyu kısa bir videoyla anlatmak",
+    "scoreEffects": {
+     "fikir": 2,
+     "insan": 1
+    },
+    "nextFocus": [
+     "fikir",
+     "insan"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "fikir",
+   "veri",
+   "duzen"
+  ],
+  "programFamilies": [
+   "temel_bilim_arastirma",
+   "yazilim_veri",
+   "mimarlik_planlama"
+  ],
+  "questionFamily": "ilgi",
+  "reversePairId": null,
+  "priority": 51,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ilgi_03",
+  "text": "Bir belgesel açacaksın.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bir hastanenin nöbet gecesi",
+    "scoreEffects": {
+     "yardim": 2,
+     "insan": 1,
+     "sorumluluk": 1
+    },
+    "nextFocus": [
+     "insan",
+     "sorumluluk",
+     "yardim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Bir köprünün sıfırdan inşası",
+    "scoreEffects": {
+     "sistem": 2,
+     "nesne": 1
+    },
+    "nextFocus": [
+     "nesne",
+     "sistem"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "sistem",
+   "yardim",
+   "insan"
+  ],
+  "programFamilies": [
+   "saglik_klinik",
+   "egitim_ogretmenlik",
+   "sosyal_psikoloji"
+  ],
+  "questionFamily": "ilgi",
+  "reversePairId": null,
+  "priority": 52,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ilgi_04",
+  "text": "Yeni bir konuyu öğrenmek istediğinde önce ne yaparsın?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Konuyu bilen biriyle konuşurum",
+    "scoreEffects": {
+     "insan": 2,
+     "takim": 1
+    },
+    "nextFocus": [
+     "insan",
+     "takim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Kaynakları bulup tek başıma okurum",
+    "scoreEffects": {
+     "fikir": 2,
+     "takim": -1
+    },
+    "nextFocus": [
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "fikir",
+   "insan",
+   "takim"
+  ],
+  "programFamilies": [
+   "medya_iletisim",
+   "turizm_hizmet",
+   "dil_kulturel"
+  ],
+  "questionFamily": "ilgi",
+  "reversePairId": null,
+  "priority": 53,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ilgi_05",
+  "text": "Gün sonunda hangisi daha tatmin edici olurdu?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Elimle bitirdiğim somut bir iş",
+    "scoreEffects": {
+     "nesne": 3
+    },
+    "nextFocus": [
+     "nesne"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Kafamda netleşen yeni bir fikir",
+    "scoreEffects": {
+     "fikir": 3
+    },
+    "nextFocus": [
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "fikir",
+   "nesne"
+  ],
+  "programFamilies": [
+   "tasarim_sanat",
+   "mimarlik_planlama",
+   "medya_iletisim"
+  ],
+  "questionFamily": "ilgi",
+  "reversePairId": null,
+  "priority": 54,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ilgi_06",
+  "text": "Haberlere baktığında hangi başlıkta duraklarsın?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Rakamlarla anlatılan bir analiz",
+    "scoreEffects": {
+     "veri": 2,
+     "sistem": 1
+    },
+    "nextFocus": [
+     "sistem",
+     "veri"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Bir kişinin yaşadıklarını anlatan bir hikâye",
+    "scoreEffects": {
+     "insan": 2,
+     "yardim": 1
+    },
+    "nextFocus": [
+     "insan",
+     "yardim"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "insan",
+   "veri",
+   "sistem"
+  ],
+  "programFamilies": [
+   "muhendislik_teknoloji",
+   "yazilim_veri",
+   "isletme_finans"
+  ],
+  "questionFamily": "ilgi",
+  "reversePairId": null,
+  "priority": 55,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ilgi_07",
+  "text": "Bir tartışmanın ortasındasın.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Karşı tarafı ikna etmeye çalışırım",
+    "scoreEffects": {
+     "liderlik": 2,
+     "insan": 1
+    },
+    "nextFocus": [
+     "insan",
+     "liderlik"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Kendi çözümümü sessizce hazırlarım",
+    "scoreEffects": {
+     "sistem": 2,
+     "takim": -1
+    },
+    "nextFocus": [
+     "sistem"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "liderlik",
+   "sistem",
+   "insan"
+  ],
+  "programFamilies": [
+   "isletme_finans",
+   "medya_iletisim",
+   "egitim_ogretmenlik"
+  ],
+  "questionFamily": "ilgi",
+  "reversePairId": null,
+  "priority": 56,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ilgi_08",
+  "text": "Hiç gitmediğin bir şehirdesin.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Önceden plan yapar, listeye göre gezerim",
+    "scoreEffects": {
+     "duzen": 2,
+     "belirsiz": -1
+    },
+    "nextFocus": [
+     "duzen"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Plansız yürür, ne çıkarsa bakarım",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "hareket": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "hareket"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "belirsiz",
+   "duzen",
+   "hareket"
+  ],
+  "programFamilies": [
+   "medya_iletisim",
+   "tarim_gida_cevre",
+   "turizm_hizmet"
+  ],
+  "questionFamily": "ilgi",
+  "reversePairId": null,
+  "priority": 50,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ortam_01",
+  "text": "Çalışma günün nasıl geçsin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Aynı masada, uzun ve kesintisiz",
+    "scoreEffects": {
+     "duzen": 2,
+     "hareket": -1
+    },
+    "nextFocus": [
+     "duzen"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Gün içinde farklı yerlerde, hareketli",
+    "scoreEffects": {
+     "hareket": 3
+    },
+    "nextFocus": [
+     "hareket"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "hareket",
+   "duzen"
+  ],
+  "programFamilies": [
+   "tarim_gida_cevre",
+   "hukuk_kamu",
+   "mimarlik_planlama"
+  ],
+  "questionFamily": "ortam",
+  "reversePairId": null,
+  "priority": 51,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ortam_02",
+  "text": "Etrafındaki ortam nasıl olsun?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Sessiz, az kişili bir yer",
+    "scoreEffects": {
+     "duzen": 2,
+     "takim": -1
+    },
+    "nextFocus": [
+     "duzen"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Sürekli insan giriş çıkışı olan bir yer",
+    "scoreEffects": {
+     "insan": 2,
+     "takim": 2
+    },
+    "nextFocus": [
+     "insan",
+     "takim"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "takim",
+   "duzen",
+   "insan"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "saglik_klinik",
+   "turizm_hizmet"
+  ],
+  "questionFamily": "ortam",
+  "reversePairId": null,
+  "priority": 52,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ortam_03",
+  "text": "Çalışma saatlerin nasıl olsun?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Her gün aynı saatler",
+    "scoreEffects": {
+     "guvence": 2,
+     "belirsiz": -1
+    },
+    "nextFocus": [
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Değişen saatler, gerekirse vardiya",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "hareket": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "hareket"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "belirsiz",
+   "guvence",
+   "hareket"
+  ],
+  "programFamilies": [
+   "turizm_hizmet",
+   "egitim_ogretmenlik",
+   "isletme_finans"
+  ],
+  "questionFamily": "ortam",
+  "reversePairId": null,
+  "priority": 53,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ortam_04",
+  "text": "Bir ekipte hangisi sana daha uygun?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Kendi parçamdan tek başıma sorumlu olmak",
+    "scoreEffects": {
+     "sorumluluk": 2,
+     "takim": -1
+    },
+    "nextFocus": [
+     "sorumluluk"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Ortak bir işi birlikte yürütmek",
+    "scoreEffects": {
+     "takim": 3
+    },
+    "nextFocus": [
+     "takim"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "takim",
+   "sorumluluk"
+  ],
+  "programFamilies": [
+   "saglik_klinik",
+   "egitim_ogretmenlik",
+   "hukuk_kamu"
+  ],
+  "questionFamily": "ortam",
+  "reversePairId": null,
+  "priority": 44,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ortam_05",
+  "text": "İşinin büyük kısmı nerede geçsin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Kapalı alanda, ekran ve belge başında",
+    "scoreEffects": {
+     "duzen": 2,
+     "veri": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "veri"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Açık havada veya sahada",
+    "scoreEffects": {
+     "hareket": 3,
+     "nesne": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "hareket",
+   "duzen",
+   "nesne"
+  ],
+  "programFamilies": [
+   "tarim_gida_cevre",
+   "muhendislik_teknoloji",
+   "uygulamali_teknik"
+  ],
+  "questionFamily": "ortam",
+  "reversePairId": null,
+  "priority": 45,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ortam_06",
+  "text": "Aynı işi yıllarca yapmak sana nasıl geliyor?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Ustalaşana kadar aynı işi yapmak iyidir",
+    "scoreEffects": {
+     "duzen": 2,
+     "guvence": 2
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Birkaç yılda bir konu değiştirmek iyidir",
+    "scoreEffects": {
+     "belirsiz": 3
+    },
+    "nextFocus": [
+     "belirsiz"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "belirsiz",
+   "duzen",
+   "guvence"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "hukuk_kamu",
+   "isletme_finans"
+  ],
+  "questionFamily": "ortam",
+  "reversePairId": null,
+  "priority": 46,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ortam_07",
+  "text": "Nerede çalışmak daha çekici?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Kuralları belli, büyük bir kurumda",
+    "scoreEffects": {
+     "guvence": 3,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Herkesin her işi yaptığı küçük bir ekipte",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "takim": 2
+    },
+    "nextFocus": [
+     "belirsiz",
+     "takim"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "guvence",
+   "belirsiz",
+   "takim"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "isletme_finans",
+   "turizm_hizmet"
+  ],
+  "questionFamily": "ortam",
+  "reversePairId": null,
+  "priority": 40,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ortam_08",
+  "text": "İşinin temposunu ne belirlesin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Net bir program ve teslim takvimi",
+    "scoreEffects": {
+     "duzen": 3
+    },
+    "nextFocus": [
+     "duzen"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Kendi kurduğum düzen",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "sorumluluk": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "sorumluluk"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "duzen",
+   "belirsiz",
+   "sorumluluk"
+  ],
+  "programFamilies": [
+   "hukuk_kamu",
+   "isletme_finans",
+   "saglik_klinik"
+  ],
+  "questionFamily": "ortam",
+  "reversePairId": null,
+  "priority": 41,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "problem_01",
+  "text": "Yeni bir işi nasıl öğrenmeyi tercih edersin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Adım adım anlatan bir yönergeyle",
+    "scoreEffects": {
+     "duzen": 3
+    },
+    "nextFocus": [
+     "duzen"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Deneyerek, gerekirse hata yaparak",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "nesne": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "nesne"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "duzen",
+   "belirsiz",
+   "nesne"
+  ],
+  "programFamilies": [
+   "tasarim_sanat",
+   "muhendislik_teknoloji",
+   "tarim_gida_cevre"
+  ],
+  "questionFamily": "problem",
+  "reversePairId": null,
+  "priority": 42,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "problem_02",
+  "text": "Hangi tür soru sana daha keyifli geliyor?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Tek bir doğru cevabı olan",
+    "scoreEffects": {
+     "veri": 2,
+     "sistem": 1
+    },
+    "nextFocus": [
+     "sistem",
+     "veri"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Cevabı yoruma açık olan",
+    "scoreEffects": {
+     "fikir": 3
+    },
+    "nextFocus": [
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "fikir",
+   "veri",
+   "sistem"
+  ],
+  "programFamilies": [
+   "temel_bilim_arastirma",
+   "yazilim_veri",
+   "mimarlik_planlama"
+  ],
+  "questionFamily": "problem",
+  "reversePairId": null,
+  "priority": 43,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "problem_03",
+  "text": "Bir şey bozulduğunda ilk refleksin ne olur?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Sökülüp onarılabilir mi diye bakmak",
+    "scoreEffects": {
+     "nesne": 3,
+     "sistem": 1
+    },
+    "nextFocus": [
+     "nesne",
+     "sistem"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Daha iyisi nasıl tasarlanır diye düşünmek",
+    "scoreEffects": {
+     "fikir": 3
+    },
+    "nextFocus": [
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "fikir",
+   "nesne",
+   "sistem"
+  ],
+  "programFamilies": [
+   "mimarlik_planlama",
+   "muhendislik_teknoloji",
+   "tasarim_sanat"
+  ],
+  "questionFamily": "problem",
+  "reversePairId": null,
+  "priority": 44,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "problem_04",
+  "text": "Hangi karmaşa daha çok ilgini çeker?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Dağınık bir veriyi anlamlı hâle getirmek",
+    "scoreEffects": {
+     "veri": 3,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "veri"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Karışmış bir insan ilişkisini çözmek",
+    "scoreEffects": {
+     "insan": 3,
+     "yardim": 1
+    },
+    "nextFocus": [
+     "insan",
+     "yardim"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "insan",
+   "veri",
+   "duzen"
+  ],
+  "programFamilies": [
+   "hukuk_kamu",
+   "isletme_finans",
+   "saglik_klinik"
+  ],
+  "questionFamily": "problem",
+  "reversePairId": null,
+  "priority": 45,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "problem_05",
+  "text": "İşinde hata payı ne olsun?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Neredeyse sıfır; kontrol çok olsun",
+    "scoreEffects": {
+     "duzen": 3,
+     "sorumluluk": 2
+    },
+    "nextFocus": [
+     "duzen",
+     "sorumluluk"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Hızlı denenip düzeltilebilsin",
+    "scoreEffects": {
+     "belirsiz": 3
+    },
+    "nextFocus": [
+     "belirsiz"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "belirsiz",
+   "duzen",
+   "sorumluluk"
+  ],
+  "programFamilies": [
+   "hukuk_kamu",
+   "isletme_finans",
+   "saglik_klinik"
+  ],
+  "questionFamily": "problem",
+  "reversePairId": null,
+  "priority": 36,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "problem_06",
+  "text": "Günün nasıl bölünsün?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Tek bir büyük işe uzun saatler",
+    "scoreEffects": {
+     "duzen": 2,
+     "fikir": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "fikir"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Gün içinde onlarca küçük iş",
+    "scoreEffects": {
+     "hareket": 2,
+     "belirsiz": 2
+    },
+    "nextFocus": [
+     "belirsiz",
+     "hareket"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "belirsiz",
+   "duzen",
+   "hareket"
+  ],
+  "programFamilies": [
+   "medya_iletisim",
+   "tarim_gida_cevre",
+   "turizm_hizmet"
+  ],
+  "questionFamily": "problem",
+  "reversePairId": null,
+  "priority": 30,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "problem_07",
+  "text": "Bir kuralla karşılaştığında ne hissedersin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Kuralı doğru uygulamak beni rahatlatır",
+    "scoreEffects": {
+     "duzen": 3,
+     "guvence": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Kuralın neden var olduğunu merak ederim",
+    "scoreEffects": {
+     "fikir": 2,
+     "belirsiz": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "duzen",
+   "fikir",
+   "belirsiz"
+  ],
+  "programFamilies": [
+   "medya_iletisim",
+   "tasarim_sanat",
+   "temel_bilim_arastirma"
+  ],
+  "questionFamily": "problem",
+  "reversePairId": null,
+  "priority": 31,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "problem_08",
+  "text": "Hangisi daha zorlayıcı ama çekici?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Sonucu yıllar sonra belli olan bir çalışma",
+    "scoreEffects": {
+     "uzunegitim": 3,
+     "belirsiz": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "uzunegitim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Sonucu aynı gün görülen bir iş",
+    "scoreEffects": {
+     "nesne": 2,
+     "hareket": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "uzunegitim",
+   "nesne",
+   "belirsiz"
+  ],
+  "programFamilies": [
+   "tasarim_sanat",
+   "temel_bilim_arastirma",
+   "muhendislik_teknoloji"
+  ],
+  "questionFamily": "problem",
+  "reversePairId": null,
+  "priority": 32,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "iletisim_01",
+  "text": "Bir işi anlatman gerekiyor.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Kalabalığa sunum yaparım",
+    "scoreEffects": {
+     "liderlik": 3,
+     "insan": 1
+    },
+    "nextFocus": [
+     "insan",
+     "liderlik"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Ayrıntılı bir rapor yazarım",
+    "scoreEffects": {
+     "duzen": 2,
+     "fikir": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "liderlik",
+   "duzen",
+   "fikir"
+  ],
+  "programFamilies": [
+   "dil_kulturel",
+   "hukuk_kamu",
+   "isletme_finans"
+  ],
+  "questionFamily": "iletisim",
+  "reversePairId": null,
+  "priority": 33,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "iletisim_02",
+  "text": "Hangisi sana daha doğal geliyor?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bir kişiyi uzun uzun dinlemek",
+    "scoreEffects": {
+     "yardim": 3,
+     "insan": 1
+    },
+    "nextFocus": [
+     "insan",
+     "yardim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Bir gruba yön vermek",
+    "scoreEffects": {
+     "liderlik": 3
+    },
+    "nextFocus": [
+     "liderlik"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "liderlik",
+   "yardim",
+   "insan"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "saglik_klinik",
+   "sosyal_psikoloji"
+  ],
+  "questionFamily": "iletisim",
+  "reversePairId": null,
+  "priority": 34,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "iletisim_03",
+  "text": "Ekipte anlaşmazlık çıktı.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Ortak noktayı bulmaya çalışırım",
+    "scoreEffects": {
+     "insan": 2,
+     "takim": 2
+    },
+    "nextFocus": [
+     "insan",
+     "takim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Doğru bulduğum tarafı savunurum",
+    "scoreEffects": {
+     "liderlik": 2,
+     "sorumluluk": 1
+    },
+    "nextFocus": [
+     "liderlik",
+     "sorumluluk"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "insan",
+   "liderlik",
+   "takim"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "isletme_finans",
+   "medya_iletisim"
+  ],
+  "questionFamily": "iletisim",
+  "reversePairId": null,
+  "priority": 35,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "iletisim_04",
+  "text": "Bir konuyu iyice öğrendin. Sonra?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Başkasına öğretmek isterim",
+    "scoreEffects": {
+     "yardim": 2,
+     "insan": 2
+    },
+    "nextFocus": [
+     "insan",
+     "yardim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Bir sonraki konuya geçmek isterim",
+    "scoreEffects": {
+     "fikir": 2,
+     "belirsiz": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "fikir",
+   "insan",
+   "yardim"
+  ],
+  "programFamilies": [
+   "sosyal_psikoloji",
+   "egitim_ogretmenlik",
+   "medya_iletisim"
+  ],
+  "questionFamily": "iletisim",
+  "reversePairId": null,
+  "priority": 36,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "iletisim_05",
+  "text": "Zor bir haberi iletmek gerekiyor.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Ben söylerim, sorumluluğunu alırım",
+    "scoreEffects": {
+     "sorumluluk": 3,
+     "liderlik": 1
+    },
+    "nextFocus": [
+     "liderlik",
+     "sorumluluk"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Söyleyecek kişinin yanında olurum",
+    "scoreEffects": {
+     "yardim": 2,
+     "takim": 1
+    },
+    "nextFocus": [
+     "takim",
+     "yardim"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "sorumluluk",
+   "yardim",
+   "liderlik"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "saglik_klinik",
+   "hukuk_kamu"
+  ],
+  "questionFamily": "iletisim",
+  "reversePairId": null,
+  "priority": 30,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "iletisim_06",
+  "text": "Yeni tanıştığın bir grupta ilk yarım saatin nasıl geçer?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Genelde konuşmayı ben başlatırım",
+    "scoreEffects": {
+     "insan": 2,
+     "liderlik": 2
+    },
+    "nextFocus": [
+     "insan",
+     "liderlik"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Önce izler, sonra katılırım",
+    "scoreEffects": {
+     "duzen": 1,
+     "fikir": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "insan",
+   "liderlik",
+   "duzen"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "hukuk_kamu",
+   "isletme_finans"
+  ],
+  "questionFamily": "iletisim",
+  "reversePairId": "ortam_02",
+  "priority": 21,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "deger_01",
+  "text": "İki iş teklifi geldi.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Maaşı sabit ve garantili olan",
+    "scoreEffects": {
+     "guvence": 3
+    },
+    "nextFocus": [
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Maaşı değişken ama tavanı yüksek olan",
+    "scoreEffects": {
+     "guvence": -2,
+     "belirsiz": 2,
+     "liderlik": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "liderlik"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "guvence",
+   "belirsiz",
+   "liderlik"
+  ],
+  "programFamilies": [
+   "isletme_finans",
+   "egitim_ogretmenlik",
+   "hukuk_kamu"
+  ],
+  "questionFamily": "degerler",
+  "reversePairId": null,
+  "priority": 52,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "deger_02",
+  "text": "Bir işi senin için anlamlı yapan ne?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Birilerinin hayatına dokunması",
+    "scoreEffects": {
+     "yardim": 3,
+     "insan": 1
+    },
+    "nextFocus": [
+     "insan",
+     "yardim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Ortaya iyi bir iş çıkması",
+    "scoreEffects": {
+     "fikir": 2,
+     "nesne": 1
+    },
+    "nextFocus": [
+     "fikir",
+     "nesne"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "yardim",
+   "fikir",
+   "insan"
+  ],
+  "programFamilies": [
+   "sosyal_psikoloji",
+   "egitim_ogretmenlik",
+   "medya_iletisim"
+  ],
+  "questionFamily": "degerler",
+  "reversePairId": null,
+  "priority": 53,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "deger_03",
+  "text": "Uzun vadede hangisi daha önemli?",
+  "options": [
+   {
+    "id": "a",
+    "text": "İşimi kaybetme ihtimalinin düşük olması",
+    "scoreEffects": {
+     "guvence": 3
+    },
+    "nextFocus": [
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Hızlı ilerleme ihtimalinin yüksek olması",
+    "scoreEffects": {
+     "liderlik": 2,
+     "belirsiz": 2
+    },
+    "nextFocus": [
+     "belirsiz",
+     "liderlik"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "guvence",
+   "belirsiz",
+   "liderlik"
+  ],
+  "programFamilies": [
+   "isletme_finans",
+   "egitim_ogretmenlik",
+   "hukuk_kamu"
+  ],
+  "questionFamily": "degerler",
+  "reversePairId": null,
+  "priority": 44,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "deger_04",
+  "text": "Çalışma hayatı ile özel hayat?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Akşam iş biter, hayat başlar",
+    "scoreEffects": {
+     "guvence": 2,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "İkisi iç içe geçebilir",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "sorumluluk": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "sorumluluk"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "belirsiz",
+   "guvence",
+   "duzen"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "hukuk_kamu",
+   "isletme_finans"
+  ],
+  "questionFamily": "degerler",
+  "reversePairId": null,
+  "priority": 45,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "deger_05",
+  "text": "Nerede yaşamak istersin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Ailemin yakınında kalmak",
+    "scoreEffects": {
+     "guvence": 2,
+     "insan": 1
+    },
+    "nextFocus": [
+     "guvence",
+     "insan"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Fırsat için başka şehre taşınmak",
+    "scoreEffects": {
+     "belirsiz": 3
+    },
+    "nextFocus": [
+     "belirsiz"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "belirsiz",
+   "guvence",
+   "insan"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "isletme_finans",
+   "medya_iletisim"
+  ],
+  "questionFamily": "degerler",
+  "reversePairId": null,
+  "priority": 46,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "deger_06",
+  "text": "Hangisi seni daha çok rahatsız eder?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Yaptığım işin kimsenin gözüne çarpmaması",
+    "scoreEffects": {
+     "liderlik": 2,
+     "insan": 1
+    },
+    "nextFocus": [
+     "insan",
+     "liderlik"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Yaptığım işin aceleye gelmesi",
+    "scoreEffects": {
+     "duzen": 3
+    },
+    "nextFocus": [
+     "duzen"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "duzen",
+   "liderlik",
+   "insan"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "hukuk_kamu",
+   "isletme_finans"
+  ],
+  "questionFamily": "degerler",
+  "reversePairId": null,
+  "priority": 30,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "deger_07",
+  "text": "Çalışma hayatının ilk 15 yılı?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Aynı kurumda derinleşmek",
+    "scoreEffects": {
+     "guvence": 3,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Birkaç farklı yerde denemek",
+    "scoreEffects": {
+     "belirsiz": 3
+    },
+    "nextFocus": [
+     "belirsiz"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "belirsiz",
+   "guvence",
+   "duzen"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "hukuk_kamu",
+   "isletme_finans"
+  ],
+  "questionFamily": "degerler",
+  "reversePairId": null,
+  "priority": 31,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "deger_08",
+  "text": "Sorumluluk sende olduğunda ne hissedersin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Kararın bende olması beni motive eder",
+    "scoreEffects": {
+     "sorumluluk": 3,
+     "liderlik": 1
+    },
+    "nextFocus": [
+     "liderlik",
+     "sorumluluk"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Kararın paylaşılması beni rahatlatır",
+    "scoreEffects": {
+     "takim": 2,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "takim"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "sorumluluk",
+   "takim",
+   "duzen"
+  ],
+  "programFamilies": [
+   "hukuk_kamu",
+   "saglik_klinik",
+   "egitim_ogretmenlik"
+  ],
+  "questionFamily": "degerler",
+  "reversePairId": null,
+  "priority": 32,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ogrenme_01",
+  "text": "Eğitim süresi konusunda ne düşünüyorsun?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Uzun sürse de sonunda uzmanlaşmak",
+    "scoreEffects": {
+     "uzunegitim": 3
+    },
+    "nextFocus": [
+     "uzunegitim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Kısa sürede işe başlamak",
+    "scoreEffects": {
+     "uzunegitim": -2,
+     "nesne": 2,
+     "hareket": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "uzunegitim",
+   "nesne",
+   "hareket"
+  ],
+  "programFamilies": [
+   "tarim_gida_cevre",
+   "muhendislik_teknoloji",
+   "mimarlik_planlama"
+  ],
+  "questionFamily": "ogrenme",
+  "reversePairId": null,
+  "priority": 53,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ogrenme_02",
+  "text": "Nasıl daha iyi öğreniyorsun?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Önce teoriyi anlayıp sonra uygulayarak",
+    "scoreEffects": {
+     "fikir": 2,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "fikir"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Doğrudan yaparak, yolda öğrenerek",
+    "scoreEffects": {
+     "nesne": 2,
+     "belirsiz": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "nesne"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "fikir",
+   "nesne",
+   "belirsiz"
+  ],
+  "programFamilies": [
+   "tasarim_sanat",
+   "medya_iletisim",
+   "mimarlik_planlama"
+  ],
+  "questionFamily": "ogrenme",
+  "reversePairId": null,
+  "priority": 44,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ogrenme_03",
+  "text": "Mezun olduktan sonra nasıl ilerlemek istersin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Sınavlarla ilerleyen bir yol beni rahatsız etmez",
+    "scoreEffects": {
+     "duzen": 2,
+     "uzunegitim": 2
+    },
+    "nextFocus": [
+     "duzen",
+     "uzunegitim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Yaptığım işi gösteren bir dosyayla ilerlemek isterim",
+    "scoreEffects": {
+     "fikir": 2,
+     "belirsiz": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "duzen",
+   "fikir",
+   "uzunegitim"
+  ],
+  "programFamilies": [
+   "temel_bilim_arastirma",
+   "dil_kulturel",
+   "hukuk_kamu"
+  ],
+  "questionFamily": "ogrenme",
+  "reversePairId": null,
+  "priority": 45,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ogrenme_04",
+  "text": "Yoğun bilgi gerektiren bir alan?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Çok şey öğrenmem gerekse de olur",
+    "scoreEffects": {
+     "duzen": 2,
+     "uzunegitim": 2
+    },
+    "nextFocus": [
+     "duzen",
+     "uzunegitim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Az bilgi, çok uygulama olsun",
+    "scoreEffects": {
+     "nesne": 2,
+     "hareket": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "duzen",
+   "nesne",
+   "uzunegitim"
+  ],
+  "programFamilies": [
+   "muhendislik_teknoloji",
+   "tarim_gida_cevre",
+   "temel_bilim_arastirma"
+  ],
+  "questionFamily": "ogrenme",
+  "reversePairId": null,
+  "priority": 36,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ogrenme_05",
+  "text": "Lisansüstü eğitim düşünür müsün?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Gerekirse yüksek lisans ya da doktora yaparım",
+    "scoreEffects": {
+     "uzunegitim": 3,
+     "fikir": 1
+    },
+    "nextFocus": [
+     "fikir",
+     "uzunegitim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Lisans yeter, sahaya çıkmak isterim",
+    "scoreEffects": {
+     "hareket": 2,
+     "nesne": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "uzunegitim",
+   "hareket",
+   "fikir"
+  ],
+  "programFamilies": [
+   "dil_kulturel",
+   "mimarlik_planlama",
+   "temel_bilim_arastirma"
+  ],
+  "questionFamily": "ogrenme",
+  "reversePairId": null,
+  "priority": 30,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "ogrenme_06",
+  "text": "Bir yıl boyunca ek çaba isteyen bir şey seçsen?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bir yabancı dilde ustalaşmak",
+    "scoreEffects": {
+     "fikir": 2,
+     "insan": 1
+    },
+    "nextFocus": [
+     "fikir",
+     "insan"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Bir aleti ya da programı ustalıkla kullanmak",
+    "scoreEffects": {
+     "sistem": 2,
+     "nesne": 1
+    },
+    "nextFocus": [
+     "nesne",
+     "sistem"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "fikir",
+   "sistem",
+   "insan"
+  ],
+  "programFamilies": [
+   "medya_iletisim",
+   "mimarlik_planlama",
+   "dil_kulturel"
+  ],
+  "questionFamily": "ogrenme",
+  "reversePairId": null,
+  "priority": 21,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "tutar_01",
+  "text": "Yoğun bir günün sonunda enerjini ne toplar?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Tek başıma geçirdiğim zaman",
+    "scoreEffects": {
+     "takim": -2,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Sevdiğim insanlarla geçirdiğim zaman",
+    "scoreEffects": {
+     "insan": 2,
+     "takim": 2
+    },
+    "nextFocus": [
+     "insan",
+     "takim"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "takim",
+   "insan",
+   "duzen"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "saglik_klinik",
+   "turizm_hizmet"
+  ],
+  "questionFamily": "tutarlilik",
+  "reversePairId": "ortam_02",
+  "priority": 22,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "tutar_02",
+  "text": "Bir arkadaşın iki iş arasında kararsız. Ne dersin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Garantili olanı seç derim",
+    "scoreEffects": {
+     "guvence": 3
+    },
+    "nextFocus": [
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Büyüme ihtimali olanı seç derim",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "liderlik": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "liderlik"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "guvence",
+   "belirsiz",
+   "liderlik"
+  ],
+  "programFamilies": [
+   "isletme_finans",
+   "egitim_ogretmenlik",
+   "hukuk_kamu"
+  ],
+  "questionFamily": "tutarlilik",
+  "reversePairId": "deger_01",
+  "priority": 23,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "tutar_03",
+  "text": "Bir haftalık iznin var.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Evde bir şeyler yapar, tamir eder, üretirim",
+    "scoreEffects": {
+     "nesne": 3
+    },
+    "nextFocus": [
+     "nesne"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Okur, izler, düşünürüm",
+    "scoreEffects": {
+     "fikir": 3
+    },
+    "nextFocus": [
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "fikir",
+   "nesne"
+  ],
+  "programFamilies": [
+   "tasarim_sanat",
+   "mimarlik_planlama",
+   "medya_iletisim"
+  ],
+  "questionFamily": "tutarlilik",
+  "reversePairId": "ilgi_05",
+  "priority": 24,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "tutar_04",
+  "text": "Bir işi teslim etmeden önce ne yaparsın?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Baştan sona bir kez daha kontrol ederim",
+    "scoreEffects": {
+     "duzen": 3
+    },
+    "nextFocus": [
+     "duzen"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Yeterliyse gönderir, gelen geri bildirimle düzeltirim",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "hareket": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "hareket"
+    ]
+   }
+  ],
+  "audience": "both",
+  "dimensions": [
+   "duzen",
+   "belirsiz",
+   "hareket"
+  ],
+  "programFamilies": [
+   "medya_iletisim",
+   "tarim_gida_cevre",
+   "turizm_hizmet"
+  ],
+  "questionFamily": "tutarlilik",
+  "reversePairId": "problem_05",
+  "priority": 25,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_01",
+  "text": "Tercih listeni yaparken nereden başlarsın?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Önce ulaşabileceğim bölümlere bakarım",
+    "scoreEffects": {
+     "duzen": 2,
+     "guvence": 2
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Önce gerçekten istediğim bölümlere bakarım",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "fikir": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "belirsiz",
+   "duzen",
+   "guvence"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "hukuk_kamu",
+   "isletme_finans"
+  ],
+  "questionFamily": "erisim",
+  "reversePairId": null,
+  "priority": 56,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_02",
+  "text": "Bir bölümü değerlendirirken neye bakarsın?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Mezun olunca yapılacak işin günlük hâline",
+    "scoreEffects": {
+     "nesne": 1,
+     "hareket": 1,
+     "sistem": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne",
+     "sistem"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Bölümde okunacak derslerin içeriğine",
+    "scoreEffects": {
+     "fikir": 2,
+     "uzunegitim": 1
+    },
+    "nextFocus": [
+     "fikir",
+     "uzunegitim"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "fikir",
+   "hareket",
+   "nesne"
+  ],
+  "programFamilies": [
+   "mimarlik_planlama",
+   "tarim_gida_cevre",
+   "tasarim_sanat"
+  ],
+  "questionFamily": "gunluk",
+  "reversePairId": null,
+  "priority": 50,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_03",
+  "text": "Listendeki dengeyi nasıl kurarsın?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Çoğunluğu kesin tutacak tercihler olsun",
+    "scoreEffects": {
+     "guvence": 3
+    },
+    "nextFocus": [
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Birkaçı kesin, gerisi iddialı olsun",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "sorumluluk": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "sorumluluk"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "guvence",
+   "belirsiz",
+   "sorumluluk"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "hukuk_kamu",
+   "isletme_finans"
+  ],
+  "questionFamily": "risk",
+  "reversePairId": null,
+  "priority": 41,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_04",
+  "text": "Sıran hedeflediğin bölüme az farkla yetişmiyor.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Aynı alandaki ulaşabildiğim bölüme giderim",
+    "scoreEffects": {
+     "duzen": 2,
+     "guvence": 2
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Bir yıl daha hazırlanmayı düşünürüm",
+    "scoreEffects": {
+     "uzunegitim": 2,
+     "belirsiz": 2
+    },
+    "nextFocus": [
+     "belirsiz",
+     "uzunegitim"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "belirsiz",
+   "duzen",
+   "guvence"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "hukuk_kamu",
+   "isletme_finans"
+  ],
+  "questionFamily": "erisim",
+  "reversePairId": null,
+  "priority": 42,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_05",
+  "text": "İki bölüm de sana uygun; biri uzun staj ve nöbet istiyor.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Yoğun tempoyu göze alırım",
+    "scoreEffects": {
+     "sorumluluk": 3,
+     "hareket": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "sorumluluk"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Daha dengeli olanı seçerim",
+    "scoreEffects": {
+     "guvence": 2,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "sorumluluk",
+   "guvence",
+   "duzen"
+  ],
+  "programFamilies": [
+   "hukuk_kamu",
+   "egitim_ogretmenlik",
+   "saglik_klinik"
+  ],
+  "questionFamily": "gunluk",
+  "reversePairId": null,
+  "priority": 43,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_06",
+  "text": "Hatanın başkasını doğrudan etkilediği bir iş?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bu sorumluluğu taşıyabilirim",
+    "scoreEffects": {
+     "sorumluluk": 3,
+     "yardim": 1
+    },
+    "nextFocus": [
+     "sorumluluk",
+     "yardim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Böyle bir yükü tercih etmem",
+    "scoreEffects": {
+     "duzen": 2,
+     "guvence": 2
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "sorumluluk",
+   "duzen",
+   "guvence"
+  ],
+  "programFamilies": [
+   "hukuk_kamu",
+   "egitim_ogretmenlik",
+   "saglik_klinik"
+  ],
+  "questionFamily": "sorumluluk",
+  "reversePairId": null,
+  "priority": 44,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_07",
+  "text": "Aynı bölüm iki farklı şehirde açılıyor.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Adı daha çok bilinen yeri seçerim",
+    "scoreEffects": {
+     "guvence": 2,
+     "liderlik": 1
+    },
+    "nextFocus": [
+     "guvence",
+     "liderlik"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Yaşamak isteyeceğim şehri seçerim",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "insan": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "insan"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "belirsiz",
+   "guvence",
+   "insan"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "isletme_finans",
+   "medya_iletisim"
+  ],
+  "questionFamily": "erisim",
+  "reversePairId": null,
+  "priority": 45,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_08",
+  "text": "Mezuniyetten sonraki ilk yıl nasıl geçsin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bir kurumda düzenli işe başlamak",
+    "scoreEffects": {
+     "guvence": 3,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Kendi işimi ya da projemi denemek",
+    "scoreEffects": {
+     "belirsiz": 3,
+     "liderlik": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "liderlik"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "belirsiz",
+   "guvence",
+   "duzen"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "hukuk_kamu",
+   "isletme_finans"
+  ],
+  "questionFamily": "gunluk",
+  "reversePairId": null,
+  "priority": 36,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_09",
+  "text": "Sırası yüksek bir bölüm ile ilgini çeken bölüm arasında?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Sırası yüksek olanı seçerim, alışırım",
+    "scoreEffects": {
+     "guvence": 2,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "İlgimi çekeni seçerim",
+    "scoreEffects": {
+     "fikir": 2,
+     "belirsiz": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "fikir",
+   "guvence",
+   "belirsiz"
+  ],
+  "programFamilies": [
+   "medya_iletisim",
+   "tasarim_sanat",
+   "temel_bilim_arastirma"
+  ],
+  "questionFamily": "risk",
+  "reversePairId": null,
+  "priority": 30,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_10",
+  "text": "İşinin büyük kısmı hangisi olsun?",
+  "options": [
+   {
+    "id": "a",
+    "text": "İnsanlarla yüz yüze geçsin",
+    "scoreEffects": {
+     "insan": 3
+    },
+    "nextFocus": [
+     "insan"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Ekran ve belge üzerinde geçsin",
+    "scoreEffects": {
+     "veri": 2,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "veri"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "insan",
+   "veri",
+   "duzen"
+  ],
+  "programFamilies": [
+   "hukuk_kamu",
+   "isletme_finans",
+   "saglik_klinik"
+  ],
+  "questionFamily": "gunluk",
+  "reversePairId": null,
+  "priority": 31,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_11",
+  "text": "Alanında ilerlemek ek sınavlar gerektiriyor.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Yıllarca sınava hazırlanabilirim",
+    "scoreEffects": {
+     "uzunegitim": 3,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "uzunegitim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Sınavsız ilerleyen bir yol isterim",
+    "scoreEffects": {
+     "nesne": 2,
+     "hareket": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "uzunegitim",
+   "nesne",
+   "duzen"
+  ],
+  "programFamilies": [
+   "muhendislik_teknoloji",
+   "tarim_gida_cevre",
+   "temel_bilim_arastirma"
+  ],
+  "questionFamily": "sorumluluk",
+  "reversePairId": null,
+  "priority": 32,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_12",
+  "text": "Bölüm mü, koşullar mı?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bölüm neyse ona göre karar veririm",
+    "scoreEffects": {
+     "duzen": 2,
+     "fikir": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "fikir"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Şehir ve yaşam koşullarına göre karar veririm",
+    "scoreEffects": {
+     "insan": 1,
+     "guvence": 2
+    },
+    "nextFocus": [
+     "guvence",
+     "insan"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "duzen",
+   "guvence",
+   "fikir"
+  ],
+  "programFamilies": [
+   "hukuk_kamu",
+   "dil_kulturel",
+   "egitim_ogretmenlik"
+  ],
+  "questionFamily": "erisim",
+  "reversePairId": null,
+  "priority": 33,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_13",
+  "text": "İlgini çeken alanda iş bulmak belirsiz görünüyor.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Yine de ilgimi takip ederim",
+    "scoreEffects": {
+     "fikir": 2,
+     "belirsiz": 2
+    },
+    "nextFocus": [
+     "belirsiz",
+     "fikir"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Daha kesin görünen bir alana yönelirim",
+    "scoreEffects": {
+     "guvence": 3
+    },
+    "nextFocus": [
+     "guvence"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "guvence",
+   "belirsiz",
+   "fikir"
+  ],
+  "programFamilies": [
+   "medya_iletisim",
+   "tasarim_sanat",
+   "temel_bilim_arastirma"
+  ],
+  "questionFamily": "risk",
+  "reversePairId": null,
+  "priority": 34,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_14",
+  "text": "Bir arkadaşın 'garanti olan' ile 'istediği' arasında kaldı.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Garantili olanı öneririm",
+    "scoreEffects": {
+     "guvence": 3
+    },
+    "nextFocus": [
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "İstediğini öneririm",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "fikir": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "guvence",
+   "belirsiz",
+   "fikir"
+  ],
+  "programFamilies": [
+   "medya_iletisim",
+   "tasarim_sanat",
+   "temel_bilim_arastirma"
+  ],
+  "questionFamily": "risk",
+  "reversePairId": "sk_09",
+  "priority": 25,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_15",
+  "text": "İlk maaş gününü hayal et.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Tahmin edilebilir, sabit bir gelir",
+    "scoreEffects": {
+     "guvence": 3
+    },
+    "nextFocus": [
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Değişken ama yükselebilen bir gelir",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "liderlik": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "liderlik"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "guvence",
+   "belirsiz",
+   "liderlik"
+  ],
+  "programFamilies": [
+   "isletme_finans",
+   "egitim_ogretmenlik",
+   "hukuk_kamu"
+  ],
+  "questionFamily": "gunluk",
+  "reversePairId": null,
+  "priority": 26,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "sk_16",
+  "text": "Kayıt haftasındasın.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bölümün ders programını incelerim",
+    "scoreEffects": {
+     "duzen": 2,
+     "fikir": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "fikir"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Şehri ve kampüsü gezerim",
+    "scoreEffects": {
+     "hareket": 2,
+     "insan": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "insan"
+    ]
+   }
+  ],
+  "audience": "score_known",
+  "dimensions": [
+   "duzen",
+   "hareket",
+   "fikir"
+  ],
+  "programFamilies": [
+   "mimarlik_planlama",
+   "dil_kulturel",
+   "medya_iletisim"
+  ],
+  "questionFamily": "erisim",
+  "reversePairId": "sk_12",
+  "priority": 20,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_01",
+  "text": "Alanın henüz netleşmemişken hangisi daha doğru?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Birkaç alanı deneyip görmek",
+    "scoreEffects": {
+     "belirsiz": 3
+    },
+    "nextFocus": [
+     "belirsiz"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Bir alana erkenden odaklanmak",
+    "scoreEffects": {
+     "duzen": 2,
+     "uzunegitim": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "uzunegitim"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "belirsiz",
+   "duzen",
+   "uzunegitim"
+  ],
+  "programFamilies": [
+   "temel_bilim_arastirma",
+   "dil_kulturel",
+   "hukuk_kamu"
+  ],
+  "questionFamily": "kesif",
+  "reversePairId": null,
+  "priority": 51,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_02",
+  "text": "Bir alanı tanımak için ne yaparsın?",
+  "options": [
+   {
+    "id": "a",
+    "text": "O işi yapan biriyle konuşurum",
+    "scoreEffects": {
+     "insan": 3
+    },
+    "nextFocus": [
+     "insan"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "O işe benzer bir şeyi kendim denerim",
+    "scoreEffects": {
+     "nesne": 2,
+     "hareket": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "insan",
+   "nesne",
+   "hareket"
+  ],
+  "programFamilies": [
+   "turizm_hizmet",
+   "tarim_gida_cevre",
+   "medya_iletisim"
+  ],
+  "questionFamily": "kesif",
+  "reversePairId": null,
+  "priority": 52,
+  "stage": "broad",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_03",
+  "text": "Önümüzdeki bir yılı neye ayırırsın?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Sınava hazırlanmaya",
+    "scoreEffects": {
+     "uzunegitim": 2,
+     "duzen": 2
+    },
+    "nextFocus": [
+     "duzen",
+     "uzunegitim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Bir beceri öğrenip denemeye",
+    "scoreEffects": {
+     "nesne": 2,
+     "hareket": 2
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "duzen",
+   "hareket",
+   "nesne"
+  ],
+  "programFamilies": [
+   "tarim_gida_cevre",
+   "muhendislik_teknoloji",
+   "uygulamali_teknik"
+  ],
+  "questionFamily": "yatirim",
+  "reversePairId": null,
+  "priority": 43,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_04",
+  "text": "Üniversite dışında bir yol?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Olabilir; işi işin içinde öğrenmek de bir yol",
+    "scoreEffects": {
+     "uzunegitim": -2,
+     "nesne": 2,
+     "hareket": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Önce üniversiteyi denemek isterim",
+    "scoreEffects": {
+     "uzunegitim": 2,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "uzunegitim"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "uzunegitim",
+   "nesne",
+   "duzen"
+  ],
+  "programFamilies": [
+   "muhendislik_teknoloji",
+   "tarim_gida_cevre",
+   "temel_bilim_arastirma"
+  ],
+  "questionFamily": "alternatif",
+  "reversePairId": null,
+  "priority": 44,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_05",
+  "text": "Beş yıl sonra kendini nasıl görmek istersin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bir alanda derinleşmiş",
+    "scoreEffects": {
+     "uzunegitim": 2,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "uzunegitim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Birkaç şeyi birden deniyor",
+    "scoreEffects": {
+     "belirsiz": 3
+    },
+    "nextFocus": [
+     "belirsiz"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "belirsiz",
+   "uzunegitim",
+   "duzen"
+  ],
+  "programFamilies": [
+   "temel_bilim_arastirma",
+   "dil_kulturel",
+   "hukuk_kamu"
+  ],
+  "questionFamily": "gelecek",
+  "reversePairId": null,
+  "priority": 45,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_06",
+  "text": "Merakın en çok nereye kayıyor?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bir şeyin nasıl çalıştığına",
+    "scoreEffects": {
+     "sistem": 3
+    },
+    "nextFocus": [
+     "sistem"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "İnsanların neden öyle davrandığına",
+    "scoreEffects": {
+     "insan": 2,
+     "yardim": 1
+    },
+    "nextFocus": [
+     "insan",
+     "yardim"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "sistem",
+   "insan",
+   "yardim"
+  ],
+  "programFamilies": [
+   "saglik_klinik",
+   "egitim_ogretmenlik",
+   "sosyal_psikoloji"
+  ],
+  "questionFamily": "kesif",
+  "reversePairId": null,
+  "priority": 46,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_07",
+  "text": "Ücretsiz bir kursa yazılsan hangisini seçersin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Teknik bir beceri",
+    "scoreEffects": {
+     "sistem": 2,
+     "nesne": 2
+    },
+    "nextFocus": [
+     "nesne",
+     "sistem"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "İletişim ve sunum becerisi",
+    "scoreEffects": {
+     "insan": 2,
+     "liderlik": 2
+    },
+    "nextFocus": [
+     "insan",
+     "liderlik"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "insan",
+   "liderlik",
+   "nesne"
+  ],
+  "programFamilies": [
+   "medya_iletisim",
+   "turizm_hizmet",
+   "egitim_ogretmenlik"
+  ],
+  "questionFamily": "yatirim",
+  "reversePairId": null,
+  "priority": 40,
+  "stage": "deepen",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_08",
+  "text": "İşin nerede olsun?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Sabit bir yerde",
+    "scoreEffects": {
+     "duzen": 2,
+     "guvence": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Değişen yerlerde",
+    "scoreEffects": {
+     "hareket": 3
+    },
+    "nextFocus": [
+     "hareket"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "hareket",
+   "duzen",
+   "guvence"
+  ],
+  "programFamilies": [
+   "hukuk_kamu",
+   "egitim_ogretmenlik",
+   "saglik_klinik"
+  ],
+  "questionFamily": "gelecek",
+  "reversePairId": null,
+  "priority": 31,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_09",
+  "text": "Bir alanı sevdiğini nasıl anlarsın?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Uzun süre sıkılmadan çalışabiliyorsam",
+    "scoreEffects": {
+     "duzen": 2,
+     "fikir": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "fikir"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Sonucu insanlara dokunuyorsa",
+    "scoreEffects": {
+     "yardim": 3
+    },
+    "nextFocus": [
+     "yardim"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "yardim",
+   "duzen",
+   "fikir"
+  ],
+  "programFamilies": [
+   "dil_kulturel",
+   "egitim_ogretmenlik",
+   "sosyal_psikoloji"
+  ],
+  "questionFamily": "kesif",
+  "reversePairId": null,
+  "priority": 32,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_10",
+  "text": "Kısa eğitimle başlanabilen bir iş düşün.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Erken başlar, yolda öğrenirim",
+    "scoreEffects": {
+     "nesne": 2,
+     "hareket": 2
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Önce eğitimimi tamamlarım",
+    "scoreEffects": {
+     "uzunegitim": 3
+    },
+    "nextFocus": [
+     "uzunegitim"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "uzunegitim",
+   "hareket",
+   "nesne"
+  ],
+  "programFamilies": [
+   "tarim_gida_cevre",
+   "muhendislik_teknoloji",
+   "mimarlik_planlama"
+  ],
+  "questionFamily": "alternatif",
+  "reversePairId": null,
+  "priority": 33,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_11",
+  "text": "Gelirin nasıl olsun?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Düzenli ve tahmin edilebilir",
+    "scoreEffects": {
+     "guvence": 3
+    },
+    "nextFocus": [
+     "guvence"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Yaptığım işe göre değişen",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "liderlik": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "liderlik"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "guvence",
+   "belirsiz",
+   "liderlik"
+  ],
+  "programFamilies": [
+   "isletme_finans",
+   "egitim_ogretmenlik",
+   "hukuk_kamu"
+  ],
+  "questionFamily": "gelecek",
+  "reversePairId": null,
+  "priority": 34,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_12",
+  "text": "Zor bir konuda tıkandın.",
+  "options": [
+   {
+    "id": "a",
+    "text": "Anlayana kadar üstüne giderim",
+    "scoreEffects": {
+     "uzunegitim": 2,
+     "duzen": 2
+    },
+    "nextFocus": [
+     "duzen",
+     "uzunegitim"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Başka bir yoldan denerim",
+    "scoreEffects": {
+     "belirsiz": 2,
+     "fikir": 1
+    },
+    "nextFocus": [
+     "belirsiz",
+     "fikir"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "belirsiz",
+   "duzen",
+   "uzunegitim"
+  ],
+  "programFamilies": [
+   "temel_bilim_arastirma",
+   "dil_kulturel",
+   "hukuk_kamu"
+  ],
+  "questionFamily": "yatirim",
+  "reversePairId": null,
+  "priority": 35,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_13",
+  "text": "Bir gün boyunca birinin yanında durabilsen?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Atölyede ya da sahada çalışan biri",
+    "scoreEffects": {
+     "nesne": 2,
+     "hareket": 2
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Ofiste plan yapan biri",
+    "scoreEffects": {
+     "veri": 2,
+     "duzen": 1
+    },
+    "nextFocus": [
+     "duzen",
+     "veri"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "hareket",
+   "nesne",
+   "veri"
+  ],
+  "programFamilies": [
+   "tarim_gida_cevre",
+   "muhendislik_teknoloji",
+   "uygulamali_teknik"
+  ],
+  "questionFamily": "kesif",
+  "reversePairId": null,
+  "priority": 36,
+  "stage": "distinguish",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_14",
+  "text": "Hangisi sana daha çok 'bu bana göre' dedirtir?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Bir şeyi çalışır hâle getirmek",
+    "scoreEffects": {
+     "sistem": 2,
+     "nesne": 2
+    },
+    "nextFocus": [
+     "nesne",
+     "sistem"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Birinin işini kolaylaştırmak",
+    "scoreEffects": {
+     "yardim": 3
+    },
+    "nextFocus": [
+     "yardim"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "yardim",
+   "nesne",
+   "sistem"
+  ],
+  "programFamilies": [
+   "muhendislik_teknoloji",
+   "tarim_gida_cevre",
+   "uygulamali_teknik"
+  ],
+  "questionFamily": "kesif",
+  "reversePairId": "su_06",
+  "priority": 20,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_15",
+  "text": "On yıl sonra ne anlatmak isterdin?",
+  "options": [
+   {
+    "id": "a",
+    "text": "'Şunu kurdum' demek",
+    "scoreEffects": {
+     "liderlik": 2,
+     "belirsiz": 2
+    },
+    "nextFocus": [
+     "belirsiz",
+     "liderlik"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "'Şu kadar kişiye faydam oldu' demek",
+    "scoreEffects": {
+     "yardim": 3,
+     "insan": 1
+    },
+    "nextFocus": [
+     "insan",
+     "yardim"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "yardim",
+   "belirsiz",
+   "liderlik"
+  ],
+  "programFamilies": [
+   "egitim_ogretmenlik",
+   "medya_iletisim",
+   "isletme_finans"
+  ],
+  "questionFamily": "gelecek",
+  "reversePairId": null,
+  "priority": 21,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ },
+ {
+  "id": "su_16",
+  "text": "Bugün bir şey öğrenmeye başlasan?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Hemen işe yarayacak bir şey",
+    "scoreEffects": {
+     "nesne": 2,
+     "hareket": 1
+    },
+    "nextFocus": [
+     "hareket",
+     "nesne"
+    ]
+   },
+   {
+    "id": "b",
+    "text": "Uzun vadede işe yarayacak bir şey",
+    "scoreEffects": {
+     "uzunegitim": 3
+    },
+    "nextFocus": [
+     "uzunegitim"
+    ]
+   }
+  ],
+  "audience": "score_unknown",
+  "dimensions": [
+   "uzunegitim",
+   "nesne",
+   "hareket"
+  ],
+  "programFamilies": [
+   "tarim_gida_cevre",
+   "muhendislik_teknoloji",
+   "mimarlik_planlama"
+  ],
+  "questionFamily": "yatirim",
+  "reversePairId": "su_03",
+  "priority": 22,
+  "stage": "validate",
+  "version": 1,
+  "status": "draft"
+ }
+]

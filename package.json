@@ -1,0 +1,11 @@
+{
+  "name": "overfit-adaptif-soru-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "OverFit YKS adaptif soru bankası ve canlı test prototipi",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "start": "python3 -m http.server 4173"
+  }
+}
