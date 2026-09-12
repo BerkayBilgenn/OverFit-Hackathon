@@ -1,11 +1,23 @@
 {
-  "name": "overfit-adaptif-soru-mvp",
+  "name": "@overfit/soru-motoru",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "OverFit YKS adaptif soru bankası ve canlı test prototipi",
+  "description": "OverFit YKS adaptif soru bankası ve kariyer/bölüm eşleştirme motoru",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./data/questions.tr.json": "./data/questions.tr.json",
+    "./data/program-groups.json": "./data/program-groups.json",
+    "./data/programs.min.json": "./data/programs.min.json"
+  },
+  "files": ["index.js", "src", "data", "README.md", "CONTRACT.md"],
+  "sideEffects": false,
+  "engines": { "node": ">=20" },
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "start": "python3 -m http.server 4173"
+    "test:py": "python3 -m unittest discover -s tests -t . -v",
+    "start": "python3 -m http.server 4173",
+    "build:questions": "python3 scripts/author_questions.py"
   }
 }

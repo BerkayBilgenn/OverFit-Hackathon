@@ -2,9 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-const html = readFileSync(new URL("../index.html", import.meta.url), "utf8");
-const app = readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
-const css = readFileSync(new URL("../styles.css", import.meta.url), "utf8");
+const html = readFileSync(new URL("../tester/index.html", import.meta.url), "utf8");
+const app = readFileSync(new URL("../tester/app.js", import.meta.url), "utf8");
+const css = readFileSync(new URL("../tester/styles.css", import.meta.url), "utf8");
 
 const has = (pattern, message) => assert.match(html, pattern, message);
 
@@ -47,12 +47,10 @@ test("prototip uyarısı ve kaynak bildirimi görünür", () => {
 });
 
 test("uygulama kodu motoru ve gerçek veriyi kullanır", () => {
-  assert.match(app, /questions\.tr\.json/);
-  assert.match(app, /program-groups\.json/);
-  assert.match(app, /programs\.min\.json/);
-  assert.match(app, /createEngine/);
+  assert.match(app, /dataUrl/, "veri yolu dışarıdan verilmeli");
+  assert.match(app, /createOverfit/);
   assert.match(app, /localStorage/);
-  assert.match(app, /STATE_VERSION/, "eski oturum biçimi temiz başlamalı");
+  assert.match(app, /overfit\.restore/, "eski oturum biçimi temiz başlamalı");
 });
 
 test("erişilebilirlik temelleri stilde karşılanır", () => {
