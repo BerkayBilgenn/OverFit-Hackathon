@@ -24,7 +24,7 @@ page.on("pageerror", (err) => errors.push(String(err)));
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-await page.goto("http://localhost:5199", { waitUntil: "networkidle0" });
+await page.goto("http://localhost:5173", { waitUntil: "networkidle0" });
 await sleep(3500); // WebGL sahnelerinin oturması için
 await page.screenshot({ path: `${OUT}/1-landing.png` });
 
@@ -44,20 +44,48 @@ await page.screenshot({ path: `${OUT}/3-zoom-mid.png` });
 await sleep(4000); // beyaz perde + robot girişi + daktilo animasyonu
 await page.screenshot({ path: `${OUT}/4-robot.png` });
 
-// Seçim → butonun içine uçuş → boş sayfa
-const puanVar = await page.waitForSelector(
-  "xpath///span[contains(., 'YKS PUANIM VAR')]",
+// Seçim → butonun içine uçuş → analiz akışı (YKS puanım yok)
+const puanYok = await page.waitForSelector(
+  "xpath///span[contains(., 'YKS PUANIM YOK')]",
 );
-await puanVar.click();
+await puanYok.click();
 await sleep(800); // uçuş ortası
 await page.screenshot({ path: `${OUT}/5-exit-mid.png` });
-await sleep(2000); // beyaz perde + boş sayfa
-await page.screenshot({ path: `${OUT}/6-placeholder.png` });
+await sleep(2500); // beyaz perde + tercih formu
+await page.screenshot({ path: `${OUT}/6-preferences.png` });
 
-// Boş sayfa geldi mi?
-await page.waitForSelector("xpath///h1[contains(., 'YKS Puanım Var')]", {
-  timeout: 5000,
-});
+// Tercih formu geldi mi?
+await page.waitForSelector(
+  "xpath///h1[contains(., 'Hayalindeki eğitim ortamını')]",
+  { timeout: 8000 },
+);
+
+// Kişisel analizi başlat → ROTA'lı quiz ekranı
+const baslat = await page.waitForSelector(
+  "xpath///button[contains(., 'Kişisel analizi başlat')]",
+);
+await baslat.click();
+await page.waitForSelector(".answers button", { timeout: 20000 }); // soru motoru yüklendi
+await sleep(2500); // robot giriş animasyonu
+await page.screenshot({ path: `${OUT}/7-quiz-robot.png` });
+
+// Tüm soruları ilk seçenekle cevapla → analiz ekranı
+for (let i = 0; i < 45; i++) {
+  const analyzing = await page.$(".analyzing-wrap");
+  if (analyzing) break;
+  const answer = await page.$(".answers button");
+  if (!answer) break;
+  await answer.click();
+  await sleep(220);
+}
+await page.waitForSelector(".analyzing-wrap", { timeout: 10000 });
+await sleep(2600); // bar yarıda — mesaj + halka görünsün
+await page.screenshot({ path: `${OUT}/8-analyzing.png` });
+
+// Bar dolsun → sonuç sayfası
+await page.waitForSelector(".result-page", { timeout: 15000 });
+await sleep(1200);
+await page.screenshot({ path: `${OUT}/9-result.png` });
 
 await browser.close();
 

@@ -12,7 +12,9 @@ const DARK = "#0a0f1c";
 type RobotProps = {
   /** false olduğunda seçim butonları küçülerek kaybolur (çıkış animasyonu) */
   visible: boolean;
-  onChoice: (choice: IntroChoice) => void;
+  onChoice?: (choice: IntroChoice) => void;
+  /** Avuçlardaki seçim butonları gösterilsin mi (quiz eşlikçisinde kapalı) */
+  withButtons?: boolean;
 };
 
 /**
@@ -20,7 +22,7 @@ type RobotProps = {
  * İki eli açık durur; avuçların üzerinde 3D seçim butonları süzülür.
  * Kafa imleci takip eder, gözler ara sıra kırpar.
  */
-export function Robot({ visible, onChoice }: RobotProps) {
+export function Robot({ visible, onChoice, withButtons = true }: RobotProps) {
   const root = useRef<THREE.Group>(null!);
   const head = useRef<THREE.Group>(null!);
   const eyeL = useRef<THREE.Mesh>(null!);
@@ -202,20 +204,24 @@ export function Robot({ visible, onChoice }: RobotProps) {
       </mesh>
 
       {/* Seçim butonları — avuçların tam üzerinde süzülen 3D kapsüller */}
-      <ChoiceButton
-        position={[-1.35, 1.32, 0.3]}
-        label="YKS PUANIM VAR"
-        variant="primary"
-        visible={visible}
-        onSelect={() => onChoice("withScore")}
-      />
-      <ChoiceButton
-        position={[1.35, 1.32, 0.3]}
-        label="YKS PUANIM YOK"
-        variant="ghost"
-        visible={visible}
-        onSelect={() => onChoice("withoutScore")}
-      />
+      {withButtons && (
+        <>
+          <ChoiceButton
+            position={[-1.35, 1.32, 0.3]}
+            label="YKS PUANIM VAR"
+            variant="primary"
+            visible={visible}
+            onSelect={() => onChoice?.("withScore")}
+          />
+          <ChoiceButton
+            position={[1.35, 1.32, 0.3]}
+            label="YKS PUANIM YOK"
+            variant="ghost"
+            visible={visible}
+            onSelect={() => onChoice?.("withoutScore")}
+          />
+        </>
+      )}
     </group>
   );
 }
