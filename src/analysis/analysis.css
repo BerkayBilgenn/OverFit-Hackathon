@@ -226,3 +226,30 @@ input:disabled { opacity: .34; cursor: not-allowed; }
   border-radius: 0 8px 8px 0;
   line-height: 1.5;
 }
+
+/* Sonuç ekranı: bölüm grubunun altında gerçek üniversiteler */
+.uni-list { list-style: none; margin: 10px 0 2px; padding: 0; display: grid; gap: 2px; }
+.uni-baslik {
+  color: var(--muted); font-size: 10px; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase; padding: 2px 0 4px;
+}
+.uni {
+  display: grid; grid-template-columns: 1fr auto; gap: 2px 12px;
+  align-items: baseline; padding: 7px 10px; border-radius: 9px;
+  border-left: 2px solid transparent; background: rgba(255, 255, 255, .02);
+}
+.uni.tuttu { border-left-color: rgba(35, 168, 124, .6); background: rgba(35, 168, 124, .05); }
+.uni-ad { font-size: 13px; font-weight: 600; }
+.uni-meta { grid-column: 1; color: var(--muted); font-size: 11px; }
+.uni-sira {
+  grid-row: 1 / span 2; grid-column: 2; text-align: right;
+  color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums;
+}
+.uni-sira b { display: block; margin-top: 3px; font-size: 10px; color: rgba(35, 168, 124, .95); }
+.uni:not(.tuttu) .uni-sira b { color: var(--muted); font-weight: 600; }
+
+@media (max-width: 720px) {
+  .uni { grid-template-columns: 1fr; }
+  .uni-sira { grid-row: auto; grid-column: 1; text-align: left; }
+  .uni-sira b { display: inline; margin: 0 0 0 8px; }
+}

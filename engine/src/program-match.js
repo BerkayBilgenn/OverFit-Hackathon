@@ -62,6 +62,86 @@ function matchesFilters(row, columns, filters) {
   return true;
 }
 
+
+/** Kataloğun taşıdığı yıllar. 2026 cari yıl; ÖSYM sonuçları açıklanmış durumda. */
+export const RANK_YEARS = Object.freeze([
+  { year: 2026, column: "rank" },
+  { year: 2025, column: "rankPrev" },
+  { year: 2024, column: "rankPrev2" },
+]);
+
+/**
+ * Bir bölüm grubunun gerçek programlarını isim isim döndürür.
+ *
+ * Aday sırasını girdiyse: son üç yılda hangi yıllarda o sıranın yettiği
+ * ayrı ayrı işaretlenir — taban sırası yıllar içinde oynayan bir programa
+ * "kesin girersin" demek yanlış olur.
+ * Sırasını girmediyse: grubun en seçici programları listelenir, hiçbir
+ * erişim iddiası üretilmez.
+ *
+ * Aynı üniversitenin birden çok programı varsa (Türkçe/İngilizce, burslu/
+ * ücretli) yalnızca en seçici olanı gösterilir; liste okunabilir kalsın.
+ */
+export function listGroupPrograms({ group, index, academic = null, filters = null, limit = 6 }) {
+  const ranks = toRanks(academic);
+  const rows = index.byGroup.get(group.id) ?? [];
+  const { columns } = index;
+  const enIyiler = new Map();
+
+  for (const row of rows) {
+    if (!matchesFilters(row, columns, filters)) continue;
+    const scoreType = row[columns.scoreType];
+    const userRank = ranks ? ranks[scoreType] : undefined;
+    if (ranks && userRank === undefined) continue;
+
+    const years = RANK_YEARS.map(({ year, column }) => ({ year, rank: row[columns[column]] ?? null }));
+    const yayimlanan = years.filter((item) => item.rank !== null);
+    const tutanYillar = userRank === undefined
+      ? []
+      : yayimlanan.filter((item) => item.rank >= userRank).map((item) => item.year);
+
+    const city = row[columns.city];
+    const program = {
+      code: row[columns.code],
+      // Kaynakta ad çoğu zaman "GAZİ ÜNİVERSİTESİ (ANKARA)" biçiminde;
+      // şehir ayrı alanda zaten var, tekrarı at.
+      university: row[columns.uni].replace(new RegExp(`\\s*\\(${city}\\)\\s*$`), "").trim(),
+      city,
+      level: row[columns.level],
+      scoreType,
+      language: row[columns.lang] || "Türkçe",
+      universityType: row[columns.uniType],
+      scholarship: row[columns.burs] || null,
+      years,
+      currentRank: years[0].rank,
+      yearsWithData: yayimlanan.length,
+      reachedYears: tutanYillar,
+      reachable: tutanYillar.length > 0,
+    };
+
+    const onceki = enIyiler.get(program.university);
+    if (!onceki || daha(program, onceki, Boolean(ranks))) enIyiler.set(program.university, program);
+  }
+
+  return [...enIyiler.values()].sort((a, b) => sirala(a, b, Boolean(ranks))).slice(0, limit);
+}
+
+/** İki programdan hangisi listede gösterilmeyi hak ediyor. */
+function daha(aday, mevcut, siraVar) {
+  if (siraVar && aday.reachable !== mevcut.reachable) return aday.reachable;
+  return kucuk(aday.currentRank) < kucuk(mevcut.currentRank);
+}
+
+const kucuk = (rank) => (rank === null ? Number.POSITIVE_INFINITY : rank);
+
+function sirala(a, b, siraVar) {
+  if (siraVar && a.reachable !== b.reachable) return a.reachable ? -1 : 1;
+  if (siraVar && a.reachable && b.reachable && a.reachedYears.length !== b.reachedYears.length) {
+    return b.reachedYears.length - a.reachedYears.length; // üç yıl tutan önce
+  }
+  return kucuk(a.currentRank) - kucuk(b.currentRank) || a.university.localeCompare(b.university, "tr");
+}
+
 export function rankProgramGroups({ familyRanking, groups, index, academic = null, filters = null, limit = 6, maxPerFamily = 2 }) {
   const ranks = toRanks(academic);
   const familyScore = Object.fromEntries(familyRanking.map((family) => [family.id, family.score]));
@@ -123,7 +203,12 @@ export function rankProgramGroups({ familyRanking, groups, index, academic = nul
   // 2) Yer kaldıysa kalan uygun gruplar, 3) en son uygun olmayanlar
   for (const group of uygun) ekle(group);
   for (const group of digerleri) ekle(group);
-  return picked;
+
+  // Üniversite listesi yalnızca gösterilecek gruplar için hesaplanır.
+  return picked.map((group) => ({
+    ...group,
+    programs: listGroupPrograms({ group, index, academic, filters, limit: 6 }),
+  }));
 }
 
 function accessFor(group, index, ranks, filters) {

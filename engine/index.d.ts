@@ -28,6 +28,16 @@ export interface Academic {
   rank?: number;
 }
 
+export const RANK_YEARS: ReadonlyArray<{ year: number; column: string }>;
+
+export function listGroupPrograms(options: {
+  group: ProgramGroup;
+  index: unknown;
+  academic?: Academic | null;
+  filters?: Filters | null;
+  limit?: number;
+}): GroupProgram[];
+
 export function toRanks(academic: Academic | null): Partial<Record<ScoreType, number>> | null;
 
 /** Tercih koşulları. Hiçbiri zorunlu değil; verilmeyen alan süzmez. */
@@ -109,6 +119,28 @@ export interface Access {
   closest: { rank: number; scoreType: ScoreType; university: string; city: string; code: string } | null;
 }
 
+/** Bir bölüm grubundaki gerçek program (üniversite + kontenjan satırı). */
+export interface GroupProgram {
+  /** ÖSYM program kodu. */
+  code: string;
+  /** Şehir tekrarı temizlenmiş üniversite adı. */
+  university: string;
+  city: string;
+  level: "LISANS" | "ONLISANS";
+  scoreType: ScoreType;
+  language: string;
+  universityType: string;
+  /** "Burslu", "%50 İndirimli"… Devlet programlarında null. */
+  scholarship: string | null;
+  /** Son üç yılın taban başarı sırası; yayımlanmamışsa null. */
+  years: Array<{ year: number; rank: number | null }>;
+  currentRank: number | null;
+  yearsWithData: number;
+  /** Adayın sırasının yettiği yıllar. Sıra girilmediyse boş. */
+  reachedYears: number[];
+  reachable: boolean;
+}
+
 export interface ProgramGroup {
   id: string;
   name: string;
@@ -121,6 +153,8 @@ export interface ProgramGroup {
   personaScore: number;
   score: number;
   access: Access | null;
+  /** Gösterilecek üniversiteler (üniversite başına en seçici program, en fazla 6). */
+  programs: GroupProgram[];
 }
 
 export interface Results {

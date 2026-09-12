@@ -23,6 +23,7 @@ WIDE_HEADER = [
     "taban_puan", "basari_sirasi", "basari_sirasi_gecen_yil",
     "basari_sirasi_2_yil_once", "ogrenim_ucreti",
 ]
+YEARS = ("rank", "rankPrev", "rankPrev2")
 
 PROGRAM_ROWS = [
     ["100100001", "A ÜNİVERSİTESİ", "MÜH. FAK.", "Bilgisayar Mühendisliği",
@@ -109,6 +110,16 @@ class BuildCatalogTests(unittest.TestCase):
         families = {group["id"]: group["family"] for group in self.result["groups"]}
         self.assertEqual(families["bilgisayar-muhendisligi"], "yazilim_veri")
         self.assertEqual(families["cocuk-gelisimi"], "egitim_ogretmenlik")
+
+    def test_three_years_of_ranks_are_kept(self):
+        table = self.result["programs"]
+        for column in YEARS:
+            self.assertIn(column, table["columns"])
+        by_code = {row[0]: row for row in table["rows"]}
+        index = {name: position for position, name in enumerate(table["columns"])}
+        self.assertEqual(by_code["100100001"][index["rankPrev"]], 13500)
+        self.assertEqual(by_code["100100001"][index["rankPrev2"]], 14100)
+        self.assertIsNone(by_code["100100002"][index["rankPrev"]], "yayımlanmamış yıl None kalmalı")
 
     def test_programs_table_is_columnar_and_rank_typed(self):
         table = self.result["programs"]
