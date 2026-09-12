@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://patika.local/schema/simulation-result.json",
+  "title": "SimulationResult",
+  "description": "Patika sonuç ekranı veri modeli. YÖK/TÜİK entegrasyonu için genişletilebilir.",
+  "type": "object",
+  "required": [
+    "profile",
+    "selection",
+    "prediction",
+    "timeline",
+    "socialComparison",
+    "whatIf"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "version": { "type": "string" },
+        "generatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "required": ["id", "name", "description", "initials"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "initials": { "type": "string", "maxLength": 3 },
+        "traits": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "required": ["department", "university", "city"],
+      "properties": {
+        "department": { "type": "string" },
+        "university": { "type": "string" },
+        "city": { "type": "string" }
+      }
+    },
+    "prediction": {
+      "type": "object",
+      "required": ["metrics"],
+      "properties": {
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "label", "value", "disclaimer"],
+            "properties": {
+              "id": { "type": "string" },
+              "label": { "type": "string" },
+              "value": { "type": "string" },
+              "unit": { "type": "string" },
+              "disclaimer": { "type": "string" },
+              "dataSource": {
+                "type": "string",
+                "enum": ["mock", "yok", "tuik", "merged"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "timeline": {
+      "type": "object",
+      "required": ["initialNodeIds", "nodes", "branches"],
+      "properties": {
+        "initialNodeIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "id",
+              "phase",
+              "title",
+              "description",
+              "status",
+              "interactive"
+            ],
+            "properties": {
+              "id": { "type": "string" },
+              "phase": { "type": "string" },
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "status": {
+                "type": "string",
+                "enum": ["past", "current", "future"]
+              },
+              "interactive": { "type": "boolean" },
+              "choices": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["id", "label", "description"],
+                  "properties": {
+                    "id": { "type": "string" },
+                    "label": { "type": "string" },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "branches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["fromNodeId", "choiceId", "nextNodeIds"],
+            "properties": {
+              "fromNodeId": { "type": "string" },
+              "choiceId": { "type": "string" },
+              "nextNodeIds": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "socialComparison": {
+      "type": "object",
+      "required": ["stats", "sampleSize", "profileMatchDescription"],
+      "properties": {
+        "profileMatchDescription": { "type": "string" },
+        "sampleSize": { "type": "integer", "minimum": 1 },
+        "stats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "text", "percentage"],
+            "properties": {
+              "id": { "type": "string" },
+              "text": { "type": "string" },
+              "percentage": { "type": "number", "minimum": 0, "maximum": 100 }
+            }
+          }
+        }
+      }
+    },
+    "whatIf": {
+      "type": "object",
+      "required": ["current", "alternative"],
+      "properties": {
+        "current": { "$ref": "#/$defs/whatIfScenario" },
+        "alternative": { "$ref": "#/$defs/whatIfScenario" }
+      }
+    }
+  },
+  "$defs": {
+    "whatIfScenario": {
+      "type": "object",
+      "required": [
+        "id",
+        "department",
+        "university",
+        "city",
+        "salaryRange",
+        "employmentProbability",
+        "jobSearchMonths",
+        "summary"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "department": { "type": "string" },
+        "university": { "type": "string" },
+        "city": { "type": "string" },
+        "salaryRange": { "type": "string" },
+        "employmentProbability": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "jobSearchMonths": { "type": "string" },
+        "summary": { "type": "string" }
+      }
+    }
+  }
+}
