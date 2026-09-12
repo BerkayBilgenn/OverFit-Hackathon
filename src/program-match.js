@@ -25,7 +25,7 @@ export function indexPrograms(programsTable) {
   return { columns, byGroup };
 }
 
-export function rankProgramGroups({ familyRanking, groups, index, academic = null, limit = 6 }) {
+export function rankProgramGroups({ familyRanking, groups, index, academic = null, limit = 6, maxPerFamily = 2 }) {
   const familyScore = Object.fromEntries(familyRanking.map((family) => [family.id, family.score]));
   const maxCount = Math.max(...groups.map((group) => group.programCount));
 
@@ -55,7 +55,23 @@ export function rankProgramGroups({ familyRanking, groups, index, academic = nul
   });
 
   scored.sort((a, b) => b.score - a.score || a.id.localeCompare(b.id));
-  return scored.slice(0, limit);
+
+  // Aynı aileden beş grup göstermek kullanıcıya seçenek sunmuyor; aile başına
+  // tavan koyup kalan yerleri sıradan doldururuz.
+  const perFamily = new Map();
+  const picked = [];
+  for (const group of scored) {
+    if (picked.length >= limit) break;
+    const used = perFamily.get(group.family) ?? 0;
+    if (used >= maxPerFamily) continue;
+    perFamily.set(group.family, used + 1);
+    picked.push(group);
+  }
+  for (const group of scored) {
+    if (picked.length >= limit) break;
+    if (!picked.includes(group)) picked.push(group);
+  }
+  return picked;
 }
 
 function accessFor(group, index, academic) {

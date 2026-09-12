@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OverFit — Adaptif Soru Prototipi</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">İçeriğe geç</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <h1>OverFit · Adaptif Soru Prototipi</h1>
+    <button id="tester-toggle" type="button" class="ghost" aria-expanded="false" aria-controls="tester-panel">
+      Test modu
+    </button>
+  </div>
+  <p class="wrap notice" role="note">
+    Ürün testi için hazırlanmış bir prototiptir. Yerleştirme olasılığı ya da psikolojik
+    değerlendirme sunmaz. Bölüm verisi YÖK Atlas 2026 kılavuzundan derlenmiştir;
+    bağlayıcı kaynak ÖSYM'nin güncel kılavuzudur.
+  </p>
+</header>
+
+<div class="wrap layout">
+  <main id="main">
+
+    <section id="screen-start" class="screen card">
+      <h2>Başlayalım</h2>
+      <p class="lead">YKS sonucun elinde mi? İki akış farklı sorular soruyor.</p>
+      <div class="choice-grid">
+        <button id="start-score-known" type="button" class="choice">
+          <span class="choice-title">YKS puanım var</span>
+          <span class="choice-sub">Başarı sıranı girersen ulaşabildiğin bölümleri de gösterir</span>
+        </button>
+        <button id="start-score-unknown" type="button" class="choice">
+          <span class="choice-title">YKS puanım yok</span>
+          <span class="choice-sub">Alan keşfi ve gelecek hedefleri üzerinden ilerler</span>
+        </button>
+      </div>
+      <p id="restore-note" class="muted" hidden></p>
+    </section>
+
+    <section id="screen-academic" class="screen card" hidden>
+      <h2>Başarı sıran</h2>
+      <p class="lead">İstersen boş bırak. Girersen sonuç ekranında erişim bilgisi de çıkar.</p>
+      <div class="field-row">
+        <div class="field">
+          <label for="score-type">Puan türü</label>
+          <select id="score-type">
+            <option value="SAY">SAY</option>
+            <option value="EA">EA</option>
+            <option value="SÖZ">SÖZ</option>
+            <option value="DİL">DİL</option>
+            <option value="TYT">TYT</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="success-rank">Başarı sırası</label>
+          <input id="success-rank" type="number" inputmode="numeric" min="1" max="3000000" placeholder="örn. 65000">
+        </div>
+      </div>
+      <div class="actions">
+        <button id="academic-continue" type="button" class="primary">Sorulara geç</button>
+        <button id="academic-skip" type="button" class="ghost">Sırayı girmeden devam et</button>
+      </div>
+    </section>
+
+    <section id="screen-question" class="screen" hidden>
+      <div class="card">
+        <p id="progress" class="progress">1 / 10</p>
+        <h2 id="question-text" class="question">—</h2>
+        <div class="options">
+          <button id="option-a" type="button" class="option"><span></span></button>
+          <button id="option-b" type="button" class="option"><span></span></button>
+        </div>
+        <div class="actions">
+          <button id="back" type="button" class="ghost">← Geri</button>
+          <button id="reset" type="button" class="ghost danger">Sıfırla</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-results" class="screen" hidden>
+      <div class="card">
+        <h2>Sonuç</h2>
+        <p class="lead" id="result-summary">—</p>
+        <h3>En güçlü sinyaller</h3>
+        <ul id="result-signals" class="signals"></ul>
+        <h3>Üç kariyer ailesi</h3>
+        <ol id="result-families" class="families"></ol>
+        <h3>Bölüm grupları</h3>
+        <p class="muted" id="result-access-note"></p>
+        <ol id="result-groups" class="groups"></ol>
+        <h3>Dikkat edilmesi gerekenler</h3>
+        <ul id="result-mismatch" class="mismatch"></ul>
+        <div class="actions">
+          <button id="result-back" type="button" class="ghost">← Son soruya dön</button>
+          <button id="result-reset" type="button" class="primary">Baştan başla</button>
+        </div>
+      </div>
+    </section>
+
+    <p id="live" class="visually-hidden" aria-live="polite"></p>
+  </main>
+
+  <aside id="tester-panel" class="tester" hidden aria-label="Test paneli">
+    <h2>Test modu</h2>
+    <p class="muted">Bu panel yalnızca ürün ekibi içindir; kullanıcıya gösterilmez.</p>
+    <div id="tester-body"></div>
+  </aside>
+</div>
+
+<footer class="wrap muted small">
+  <p id="data-footer">—</p>
+</footer>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>

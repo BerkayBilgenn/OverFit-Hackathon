@@ -87,3 +87,22 @@ test("farklı personalar farklı bölüm grupları getirir", () => {
   console.log(`    B yolu: ${second.slice(0, 3).join(", ")}`);
   assert.notDeepEqual(first, second);
 });
+
+test("sonuç listesi tek aileye kilitlenmez", () => {
+  const state = runSession("score_known", () => "a", { scoreType: "SAY", rank: 65000 });
+  const ranked = rankProgramGroups({
+    familyRanking: engine.rankFamilies(state.profile),
+    groups: catalog.groups,
+    index,
+    academic: { scoreType: "SAY", rank: 65000 },
+    limit: 5,
+  });
+  const families = ranked.map((group) => group.family);
+  const counts = families.reduce((acc, family) => ({ ...acc, [family]: (acc[family] ?? 0) + 1 }), {});
+  console.log(`    gruplar: ${ranked.map((g) => `${g.name} [${g.family}]`).join(", ")}`);
+  for (const [family, count] of Object.entries(counts)) {
+    assert.ok(count <= 2, `${family} ${count} kez çıktı, tavan 2`);
+  }
+  assert.ok(new Set(families).size >= 3, "en az üç farklı aile görünmeli");
+  assert.equal(ranked.length, 5);
+});
