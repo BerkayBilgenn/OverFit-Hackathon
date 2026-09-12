@@ -41,7 +41,7 @@ const kesfet = await page.waitForSelector(
 await kesfet.click();
 await sleep(1000); // uçuş ortası
 await page.screenshot({ path: `${OUT}/3-zoom-mid.png` });
-await sleep(2500); // beyaz perde + robot girişi
+await sleep(4000); // beyaz perde + robot girişi + daktilo animasyonu
 await page.screenshot({ path: `${OUT}/4-robot.png` });
 
 // Seçim → butonun içine uçuş → boş sayfa

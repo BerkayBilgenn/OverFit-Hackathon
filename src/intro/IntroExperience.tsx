@@ -1,10 +1,18 @@
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { ContactShadows, Environment, Lightformer, Stars } from "@react-three/drei";
+import {
+  ContactShadows,
+  Environment,
+  Grid,
+  Html,
+  Lightformer,
+  Stars,
+} from "@react-three/drei";
 import * as THREE from "three";
 import { Compass } from "./Compass";
 import { DiscoverButton } from "./DiscoverButton";
 import { Robot } from "./Robot";
+import { BackdropField } from "./BackdropField";
 
 export type IntroChoice = "withScore" | "withoutScore";
 
@@ -15,6 +23,72 @@ const EXIT_DURATION = 1.5; // saniye
 
 function easeInOutCubic(x: number) {
   return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+}
+
+/** Daktilo efekti: active olunca metni harf harf yazar */
+function useTypewriter(text: string, active: boolean, speed = 55, startDelay = 800) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!active) {
+      setCount(0);
+      return;
+    }
+    let i = 0;
+    let interval: number | undefined;
+    const timeout = window.setTimeout(() => {
+      interval = window.setInterval(() => {
+        i += 1;
+        setCount(i);
+        if (i >= text.length && interval) window.clearInterval(interval);
+      }, speed);
+    }, startDelay);
+    return () => {
+      window.clearTimeout(timeout);
+      if (interval) window.clearInterval(interval);
+    };
+  }, [text, active, speed, startDelay]);
+
+  return { typed: text.slice(0, count), done: count >= text.length };
+}
+
+/** Yumuşak radyal ışık lekesi (prosedürel doku — çevrimdışı çalışır) */
+function GlowSpot({
+  position,
+  size,
+  color,
+  opacity,
+}: {
+  position: [number, number, number];
+  size: number;
+  color: string;
+  opacity: number;
+}) {
+  const texture = useMemo(() => {
+    const c = document.createElement("canvas");
+    c.width = c.height = 256;
+    const ctx = c.getContext("2d")!;
+    const g = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+    g.addColorStop(0, "rgba(255,255,255,0.85)");
+    g.addColorStop(0.45, "rgba(255,255,255,0.25)");
+    g.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 256, 256);
+    return new THREE.CanvasTexture(c);
+  }, []);
+
+  return (
+    <mesh position={position}>
+      <planeGeometry args={[size, size]} />
+      <meshBasicMaterial
+        map={texture}
+        color={color}
+        transparent
+        opacity={opacity}
+        depthWrite={false}
+      />
+    </mesh>
+  );
 }
 
 const COMPASS_RADIUS = 2.75; // dış halka + taşıma halkası payı
@@ -122,13 +196,13 @@ function CameraRig({
       const e = easeInOutCubic(progress.current);
       const s = exitStart.current;
       cam.position.set(
-        THREE.MathUtils.lerp(s.x, exitSide * 1.55, e),
-        THREE.MathUtils.lerp(s.y, 1.8, e),
+        THREE.MathUtils.lerp(s.x, exitSide * 1.1, e),
+        THREE.MathUtils.lerp(s.y, 1.35, e),
         THREE.MathUtils.lerp(s.z, 2.3, e),
       );
       cam.fov = THREE.MathUtils.lerp(s.fov, 70, e);
       cam.updateProjectionMatrix();
-      cam.lookAt(exitSide * 1.9, 1.9, 0.35);
+      cam.lookAt(exitSide * 1.35, 1.3, 0.3);
 
       if (progress.current >= 1 && !completed.current) {
         completed.current = true;
@@ -167,6 +241,11 @@ export function IntroExperience({ onComplete }: IntroExperienceProps) {
     setPhase("exiting");
   };
 
+  const { typed: subtitle, done: subtitleDone } = useTypewriter(
+    "Pusula seni Rota'yla yönlendirir",
+    phase === "robot",
+  );
+
   return (
     <div className="fixed inset-0 overflow-hidden bg-[#060d1f]">
       <Canvas
@@ -194,17 +273,49 @@ export function IntroExperience({ onComplete }: IntroExperienceProps) {
           )}
           {(phase === "robot" || phase === "exiting") && (
             <>
+              {/* Derinlik için sis — uzak objeler arka plana karışır */}
+              <fog attach="fog" args={["#060d1f", 12, 30]} />
+
+              {/* Kariyer temalı süzülen objeler + rota çizgileri */}
+              <BackdropField />
+
+              {/* Arka plan: spot ışık lekeleri + grid zemin */}
+              <GlowSpot position={[0, 1.4, -4]} size={15} color="#4a7cff" opacity={0.5} />
+              <GlowSpot position={[4.5, -1.5, -3.5]} size={9} color="#ff5a4e" opacity={0.22} />
+              <Grid
+                position={[0, -1.16, 0]}
+                infiniteGrid
+                cellSize={0.55}
+                sectionSize={2.75}
+                cellColor="#16294d"
+                sectionColor="#2c4a80"
+                fadeDistance={20}
+                fadeStrength={2.5}
+              />
+
               {/* Robotu arka plandan ayıran kenar ışıkları */}
               <pointLight position={[-3.5, 3, -2]} intensity={9} color="#7ea0ff" />
               <pointLight position={[3.5, 2, -2]} intensity={7} color="#ff6b5e" />
               <Robot visible={phase === "robot"} onChoice={handleChoice} />
               <ContactShadows
-                position={[0, -1.5, 0]}
-                opacity={0.4}
-                scale={12}
-                blur={2.6}
-                far={4}
+                position={[0, -0.94, 0]}
+                opacity={0.35}
+                scale={5}
+                blur={2.4}
+                far={2}
               />
+
+              {/* İsim etiketi — referanstaki gibi robotun altında */}
+              <Html
+                position={[0, -1.85, 0]}
+                center
+                zIndexRange={[5, 0]}
+                wrapperClass="pointer-events-none"
+              >
+                <span className="font-display pl-[0.35em] text-4xl font-bold tracking-[0.35em] whitespace-nowrap text-white/90 select-none drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
+                  ROTA
+                </span>
+              </Html>
             </>
           )}
 
@@ -266,11 +377,21 @@ export function IntroExperience({ onComplete }: IntroExperienceProps) {
               phase === "exiting" ? "opacity-0" : "opacity-100"
             }`}
           >
-            <h2 className="font-display text-2xl font-bold text-white sm:text-3xl">
-              Merhaba! Ben ROTA
+            <h2 className="font-display text-4xl font-bold tracking-wide sm:text-6xl">
+              <span className="bg-gradient-to-b from-white via-slate-100 to-slate-500 bg-clip-text text-transparent">
+                Merhaba! Ben{" "}
+              </span>
+              <span className="bg-gradient-to-br from-rose-400 to-red-600 bg-clip-text text-transparent">
+                ROTA
+              </span>
             </h2>
-            <p className="mt-2 text-sm text-slate-300/80 sm:text-base">
-              Pusula seni Rota&apos;yla yönlendirir
+            <p className="mt-3 min-h-7 text-base font-light tracking-wide text-slate-300/80 sm:text-lg">
+              {subtitle}
+              {!subtitleDone && (
+                <span className="ml-0.5 animate-pulse font-normal text-red-400">
+                  |
+                </span>
+              )}
             </p>
           </div>
         </div>

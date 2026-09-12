@@ -1,16 +1,13 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 import { ChoiceButton } from "./ChoiceButton";
 import type { IntroChoice } from "./IntroExperience";
 
-const PEARL = "#e9eef6";
-const PEARL_DARK = "#c9d4e4";
-const STEEL = "#c7d0de";
+const PEARL = "#f2f5fa";
+const PEARL_DARK = "#d5deeb";
 const RED = "#e63946";
-const VISOR = "#0a1428";
-const EYE = "#eaf2ff";
+const DARK = "#0a0f1c";
 
 type RobotProps = {
   /** false olduğunda seçim butonları küçülerek kaybolur (çıkış animasyonu) */
@@ -19,15 +16,13 @@ type RobotProps = {
 };
 
 /**
- * Tercih robotu — iki eli açık, sevimli robot.
- * Sol elinde "Puanım Var", sağ elinde "Puanım Yok" butonu taşır.
- * Sahneye yukarıdan yumuşak bir inişle girer, kafası imleci takip eder.
+ * ROTA — parlak beyaz, yumurta gövdeli, büyük siyah gözlü sevimli robot.
+ * İki eli açık durur; avuçların üzerinde 3D seçim butonları süzülür.
+ * Kafa imleci takip eder, gözler ara sıra kırpar.
  */
 export function Robot({ visible, onChoice }: RobotProps) {
   const root = useRef<THREE.Group>(null!);
   const head = useRef<THREE.Group>(null!);
-  const armL = useRef<THREE.Group>(null!);
-  const armR = useRef<THREE.Group>(null!);
   const eyeL = useRef<THREE.Mesh>(null!);
   const eyeR = useRef<THREE.Mesh>(null!);
   const core = useRef<THREE.MeshStandardMaterial>(null!);
@@ -36,7 +31,7 @@ export function Robot({ visible, onChoice }: RobotProps) {
     const t = state.clock.elapsedTime;
     const g = root.current;
 
-    // Giriş animasyonu: yukarıdan in + büyü, sonra tamamen durağan
+    // Giriş animasyonu: yukarıdan in + büyü, sonra durağan
     g.scale.setScalar(THREE.MathUtils.damp(g.scale.x, 1, 3.2, delta));
     g.position.y = THREE.MathUtils.damp(g.position.y, 0, 3.2, delta);
 
@@ -54,166 +49,168 @@ export function Robot({ visible, onChoice }: RobotProps) {
       delta,
     );
 
-    // Göz kırpma (tek hareket)
+    // Göz kırpma
     const blink = Math.pow(Math.max(Math.sin(t * 1.1), 0), 30);
-    const eyeScale = 1 - 0.85 * blink;
-    eyeL.current.scale.y = eyeScale;
-    eyeR.current.scale.y = eyeScale;
+    const eyeScale = 1 - 0.9 * blink;
+    eyeL.current.scale.set(0.16, 0.22 * eyeScale, 0.1);
+    eyeR.current.scale.set(0.16, 0.22 * eyeScale, 0.1);
 
-    // Göğüs çekirdeğinin ışığı yavaşça nefes alır
+    // Göğüs noktasının ışığı yavaşça nefes alır
     core.current.emissiveIntensity = 1.6 + Math.sin(t * 1.8) * 0.4;
   });
 
+  const pearlMat = (
+    <meshPhysicalMaterial
+      color={PEARL}
+      metalness={0.05}
+      roughness={0.18}
+      clearcoat={1}
+      clearcoatRoughness={0.15}
+    />
+  );
+
   return (
     <group ref={root} scale={0.01} position={[0, 2.6, 0]}>
-      {/* Gövde */}
-      <RoundedBox args={[1.7, 1.7, 1.15]} radius={0.32} smoothness={8}>
-        <meshStandardMaterial color={PEARL} metalness={0.15} roughness={0.35} />
-      </RoundedBox>
+      {/* Gövde — yumurta formu */}
+      <mesh position={[0, -0.15, 0]} scale={[0.62, 0.75, 0.55]}>
+        <sphereGeometry args={[1, 48, 48]} />
+        {pearlMat}
+      </mesh>
 
-      {/* Göğüs çekirdeği */}
-      <mesh position={[0, 0.15, 0.58]}>
-        <sphereGeometry args={[0.22, 32, 32]} />
+      {/* Kırmızı göğüs noktası */}
+      <mesh position={[0, 0.05, 0.53]}>
+        <sphereGeometry args={[0.09, 24, 24]} />
         <meshStandardMaterial
           ref={core}
+          color={RED}
+          emissive={RED}
+          emissiveIntensity={1.8}
+        />
+      </mesh>
+
+      {/* Kafa */}
+      <group ref={head} position={[0, 1.05, 0]}>
+        <mesh scale={[1, 0.92, 0.95]}>
+          <sphereGeometry args={[0.85, 48, 48]} />
+          {pearlMat}
+        </mesh>
+
+        {/* Anten nubu (kırmızı detay) */}
+        <mesh position={[0, 0.84, 0]}>
+          <sphereGeometry args={[0.07, 16, 16]} />
+          <meshStandardMaterial
+            color={RED}
+            emissive={RED}
+            emissiveIntensity={1.5}
+          />
+        </mesh>
+
+        {/* Büyük siyah gözler */}
+        <mesh ref={eyeL} position={[-0.32, 0.08, 0.72]} scale={[0.16, 0.22, 0.1]}>
+          <sphereGeometry args={[1, 32, 32]} />
+          <meshPhysicalMaterial
+            color={DARK}
+            roughness={0.05}
+            clearcoat={1}
+            clearcoatRoughness={0.05}
+          />
+        </mesh>
+        <mesh ref={eyeR} position={[0.32, 0.08, 0.72]} scale={[0.16, 0.22, 0.1]}>
+          <sphereGeometry args={[1, 32, 32]} />
+          <meshPhysicalMaterial
+            color={DARK}
+            roughness={0.05}
+            clearcoat={1}
+            clearcoatRoughness={0.05}
+          />
+        </mesh>
+
+        {/* Göz parlama noktaları */}
+        <mesh position={[-0.26, 0.18, 0.79]}>
+          <sphereGeometry args={[0.04, 12, 12]} />
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="#ffffff"
+            emissiveIntensity={1.2}
+          />
+        </mesh>
+        <mesh position={[0.38, 0.18, 0.79]}>
+          <sphereGeometry args={[0.04, 12, 12]} />
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="#ffffff"
+            emissiveIntensity={1.2}
+          />
+        </mesh>
+      </group>
+
+      {/* Sol kol + avuç (YKS PUANIM VAR) */}
+      <group position={[-0.55, 0.25, 0]} rotation={[0, 0, 0.9]}>
+        <mesh position={[0, 0.4, 0]}>
+          <capsuleGeometry args={[0.13, 0.55, 8, 16]} />
+          <meshPhysicalMaterial
+            color={PEARL_DARK}
+            metalness={0.1}
+            roughness={0.3}
+            clearcoat={0.6}
+          />
+        </mesh>
+        <mesh position={[0, 0.8, 0]}>
+          <sphereGeometry args={[0.17, 24, 24]} />
+          {pearlMat}
+        </mesh>
+        <mesh position={[0, 0.94, 0]}>
+          <cylinderGeometry args={[0.22, 0.22, 0.06, 24]} />
+          {pearlMat}
+        </mesh>
+      </group>
+
+      {/* Sağ kol + avuç (YKS PUANIM YOK) */}
+      <group position={[0.55, 0.25, 0]} rotation={[0, 0, -0.9]}>
+        <mesh position={[0, 0.4, 0]}>
+          <capsuleGeometry args={[0.13, 0.55, 8, 16]} />
+          <meshPhysicalMaterial
+            color={PEARL_DARK}
+            metalness={0.1}
+            roughness={0.3}
+            clearcoat={0.6}
+          />
+        </mesh>
+        <mesh position={[0, 0.8, 0]}>
+          <sphereGeometry args={[0.17, 24, 24]} />
+          {pearlMat}
+        </mesh>
+        <mesh position={[0, 0.94, 0]}>
+          <cylinderGeometry args={[0.22, 0.22, 0.06, 24]} />
+          {pearlMat}
+        </mesh>
+      </group>
+
+      {/* Platform — referanstaki beyaz kaide */}
+      <mesh position={[0, -1.05, 0]}>
+        <cylinderGeometry args={[1.35, 1.5, 0.18, 64]} />
+        {pearlMat}
+      </mesh>
+      {/* Platform kenarında kırmızı neon halka */}
+      <mesh position={[0, -0.95, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[1.36, 0.02, 8, 96]} />
+        <meshStandardMaterial
           color={RED}
           emissive={RED}
           emissiveIntensity={2}
         />
       </mesh>
 
-      {/* Kafa */}
-      <group ref={head} position={[0, 1.5, 0]}>
-        <RoundedBox args={[1.55, 1.05, 1.1]} radius={0.4} smoothness={8}>
-          <meshStandardMaterial color={PEARL} metalness={0.15} roughness={0.3} />
-        </RoundedBox>
-
-        {/* Kulak diskleri (kırmızı detay) */}
-        <mesh position={[-0.82, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.22, 0.22, 0.1, 24]} />
-          <meshStandardMaterial
-            color={RED}
-            emissive={RED}
-            emissiveIntensity={0.6}
-            metalness={0.3}
-            roughness={0.35}
-          />
-        </mesh>
-        <mesh position={[0.82, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.22, 0.22, 0.1, 24]} />
-          <meshStandardMaterial
-            color={RED}
-            emissive={RED}
-            emissiveIntensity={0.6}
-            metalness={0.3}
-            roughness={0.35}
-          />
-        </mesh>
-
-        {/* Vizör */}
-        <RoundedBox
-          args={[1.15, 0.62, 0.2]}
-          radius={0.09}
-          smoothness={8}
-          position={[0, 0.05, 0.5]}
-        >
-          <meshStandardMaterial color={VISOR} metalness={0.6} roughness={0.15} />
-        </RoundedBox>
-
-        {/* Gözler */}
-        <mesh ref={eyeL} position={[-0.28, 0.08, 0.6]}>
-          <sphereGeometry args={[0.13, 24, 24]} />
-          <meshStandardMaterial
-            color={EYE}
-            emissive={EYE}
-            emissiveIntensity={2.4}
-          />
-        </mesh>
-        <mesh ref={eyeR} position={[0.28, 0.08, 0.6]}>
-          <sphereGeometry args={[0.13, 24, 24]} />
-          <meshStandardMaterial
-            color={EYE}
-            emissive={EYE}
-            emissiveIntensity={2.4}
-          />
-        </mesh>
-
-        {/* Gülümseme */}
-        <mesh position={[0, -0.14, 0.6]} rotation={[0, 0, Math.PI]}>
-          <torusGeometry args={[0.15, 0.028, 8, 32, Math.PI]} />
-          <meshStandardMaterial
-            color={EYE}
-            emissive={EYE}
-            emissiveIntensity={1.6}
-          />
-        </mesh>
-
-        {/* Anten */}
-        <mesh position={[0, 0.68, 0]}>
-          <cylinderGeometry args={[0.03, 0.03, 0.35, 12]} />
-          <meshStandardMaterial color={STEEL} metalness={0.9} roughness={0.3} />
-        </mesh>
-        <mesh position={[0, 0.9, 0]}>
-          <sphereGeometry args={[0.08, 16, 16]} />
-          <meshStandardMaterial
-            color={RED}
-            emissive={RED}
-            emissiveIntensity={2}
-          />
-        </mesh>
-      </group>
-
-      {/* Sol kol + el (Puanım Var) */}
-      <group ref={armL} position={[-0.95, 0.55, 0]} rotation={[0, 0, 0.8]}>
-        <mesh position={[0, 0.55, 0]}>
-          <capsuleGeometry args={[0.16, 0.8, 8, 16]} />
-          <meshStandardMaterial
-            color={PEARL_DARK}
-            metalness={0.3}
-            roughness={0.4}
-          />
-        </mesh>
-        <mesh position={[0, 1.12, 0]}>
-          <sphereGeometry args={[0.24, 24, 24]} />
-          <meshStandardMaterial color={STEEL} metalness={0.9} roughness={0.3} />
-        </mesh>
-        {/* Avuç */}
-        <mesh position={[0, 1.32, 0]}>
-          <cylinderGeometry args={[0.3, 0.3, 0.08, 24]} />
-          <meshStandardMaterial color={STEEL} metalness={0.9} roughness={0.3} />
-        </mesh>
-      </group>
-
-      {/* Sağ kol + el (Puanım Yok) */}
-      <group ref={armR} position={[0.95, 0.55, 0]} rotation={[0, 0, -0.8]}>
-        <mesh position={[0, 0.55, 0]}>
-          <capsuleGeometry args={[0.16, 0.8, 8, 16]} />
-          <meshStandardMaterial
-            color={PEARL_DARK}
-            metalness={0.3}
-            roughness={0.4}
-          />
-        </mesh>
-        <mesh position={[0, 1.12, 0]}>
-          <sphereGeometry args={[0.24, 24, 24]} />
-          <meshStandardMaterial color={STEEL} metalness={0.9} roughness={0.3} />
-        </mesh>
-        <mesh position={[0, 1.32, 0]}>
-          <cylinderGeometry args={[0.3, 0.3, 0.08, 24]} />
-          <meshStandardMaterial color={STEEL} metalness={0.9} roughness={0.3} />
-        </mesh>
-      </group>
-
       {/* Seçim butonları — avuçların tam üzerinde süzülen 3D kapsüller */}
       <ChoiceButton
-        position={[-1.9, 1.92, 0.35]}
+        position={[-1.35, 1.32, 0.3]}
         label="YKS PUANIM VAR"
         variant="primary"
         visible={visible}
         onSelect={() => onChoice("withScore")}
       />
       <ChoiceButton
-        position={[1.9, 1.92, 0.35]}
+        position={[1.35, 1.32, 0.3]}
         label="YKS PUANIM YOK"
         variant="ghost"
         visible={visible}
