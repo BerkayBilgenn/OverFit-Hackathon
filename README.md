@@ -1,7 +1,7 @@
 # OverFit Hackathon
 
-OverFit, YKS sonucu belli olan ve olmayan kullanıcıların ilgi alanlarını, çalışma tercihlerini ve gelecek hedeflerini analiz ederek kişiselleştirilmiş bölüm önerileri üretir.
+OverFit, “YKS puanım var” ve “YKS puanım yok” girişleri için iki ayrı kullanıcı akışı sunar. İlgi alanları, çalışma tercihleri ve gelecek hedeflerinden kişiselleştirilmiş kariyer ve bölüm önerileri üretmeyi amaçlar.
 
 ## Ürün belgeleri
 
-- [YKS persona ve bölüm öneri pipeline'ı](docs/yks-persona-questionnaire-pipeline.md)
+- [İki ayrı YKS persona ve bölüm öneri pipeline'ı](docs/yks-persona-questionnaire-pipeline.md)

@@ -1,6 +1,6 @@
-# YKS Persona ve Bölüm Öneri Pipeline'ı
+# YKS Persona ve Bölüm Öneri Pipeline'ları
 
-**Durum:** Onaylandı
+**Durum:** İki ürün akışı onaylandı; teknik puanlama modeli ayrıca doğrulanacak.
 
 **Tarih:** 12 Eylül 2026
 
@@ -10,19 +10,21 @@ OverFit, kullanıcının yalnızca YKS sonucuna göre tercih listesi oluşturan 
 
 Ürün iki kullanıcı yolunu destekler:
 
-1. **YKS sonucum belli:** Puan, başarı sırası ve persona uyumu birlikte değerlendirilir.
-2. **YKS sonucum belli değil:** Persona ve gelecek hedefleri belirlenir; uygun bölümlerle birlikte hedef başarı sıraları gösterilir.
+1. **YKS puanım var:** Sıralama ve tercih koşullarına uygun programlar, persona uyumuyla birlikte değerlendirilir.
+2. **YKS puanım yok:** Geniş kariyer keşfi yapılır; kariyerler, bölümler, alternatif eğitim yolları ve uygun programlar için hedef başarı sıraları gösterilir.
+
+Her girişin bağımsız başlangıcı, soru seçimi bağlamı ve sonuç ekranı vardır. Kullanıcı seçtiği pipeline boyunca ilerler; YKS durumu tekrar sorulmaz. Soru havuzu ve hesaplama bileşenleri paylaşılabilir.
 
 Kullanıcının sınıf seviyesi ana akışı değiştirmez.
 
 ## Temel ilkeler
 
-- Kullanıcı toplam 10 soru cevaplar.
+- Kullanıcı toplam 10 persona sorusu cevaplar.
 - YKS sonucu, şehir ve tercih koşulları 10 persona sorusunun dışında alınır.
 - Her soruda iki cevap seçeneği bulunur.
 - Her cevap, bir sonraki sorunun seçimini etkiler.
 - Sorular sabit bir sırayla gösterilmez.
-- Sistem 300 soruluk etiketli ve gözden geçirilmiş bir havuz kullanır.
+- Sistem için 300 soruluk etiketli bir havuz planlanmıştır; sorular kullanıma alınmadan önce gözden geçirilir.
 - Tek bir cevap bir bölümü kesin olarak elemez; uyum ağırlığını değiştirir.
 - Akademik eşikler ve kullanıcının açık kısıtları kesin filtre olabilir.
 - AI yeni test sorusu üretmez; onaylı havuzdan seçim yapılır.
@@ -44,26 +46,10 @@ YKS durumu bir anket sorusu olarak gösterilmez. Ana ekranda iki ayrı buton bul
 
 **Butonlar**
 
-- `YKS sonucum belli`
-- `YKS sonucum belli değil`
+- `YKS puanım var`
+- `YKS puanım yok`
 
-```mermaid
-flowchart TD
-    A[Ana ekran] --> B[YKS sonucum belli]
-    A --> C[YKS sonucum belli değil]
-    B --> D[YKS sonuçlarını gir]
-    D --> E[Puan türü ve başarı sıralamalarını doğrula]
-    E --> P1[Şehir ve tercih koşullarını al]
-    P1 --> F[Ulaşılabilir program havuzunu oluştur]
-    F --> G[10 soruluk adaptif persona testi]
-    G --> H[Akademik uygunluk + persona + gelecek analizi]
-    H --> I[Kişiselleştirilmiş bölüm önerileri]
-    C --> P2[Şehir ve tercih koşullarını al]
-    P2 --> J[Tüm bölüm ailelerini aday havuzuna al]
-    J --> K[10 soruluk adaptif persona testi]
-    K --> L[Persona + hedefler + gelecek analizi]
-    L --> M[Bölüm önerileri ve hedef başarı sıraları]
-```
+Her buton aşağıda ayrı belgelenen pipeline'ı başlatır. Kullanıcıya birleşik bir akış gösterilmez.
 
 ## Şehir ve tercih koşulları
 
@@ -87,11 +73,13 @@ flowchart TD
 - Filtreler hiç sonuç bırakmazsa sistem sessizce boş ekran göstermez. Sonucu engelleyen koşulları açıklar ve kullanıcının filtreleri değiştirmesine izin verir.
 - Kullanıcı sonuç ekranında tercih koşullarını değiştirerek önerileri yeniden hesaplayabilir.
 
-## YKS sonucu belli kullanıcı
+## Pipeline 1 — YKS puanım var
+
+Amaç: Kullanıcının sıralamasına ve tercihlerine göre değerlendirilebilecek programlar arasından ilgi ve çalışma beklentilerine uygun seçenekleri bulmak.
 
 ### Sonuç girişleri
 
-Kullanıcı sonuç belgesindeki mevcut puan türleri için puan ve başarı sırasını girer:
+Kullanıcı sınav yılını ve sonuç belgesindeki mevcut puan türleri için puan ve başarı sırasını girer:
 
 - TYT
 - SAY
@@ -109,66 +97,63 @@ Sistem son üç yerleştirme yılının ÖSYM ve YÖK Atlas verilerini kullanara
 - **Hedef:** Geçmiş eşiklerin kullanıcının sıralamasına yakın olduğu programlar.
 - **İddialı:** Daha iyi sıralama istemiş ancak makul tercih senaryosunda değerlendirilebilecek programlar.
 
-Yıllar arasındaki oynaklık hesaba katılır ve kesin yerleşme garantisi üretilmez.
+Yıllar arasındaki oynaklık hesaba katılır ve kesin yerleşme garantisi üretilmez. Bu etiketlerin eşikleri geçmiş dönemlerle doğrulanmadan kesin olasılık gibi gösterilmez. Geçmiş taban sıraları tek başına kesin eleme koşulu değildir.
+
+Akademik erişilebilirlik ve kariyer ilgisi ayrı tutulur. Sıralama veya şehir kısıtı persona puanını doğrudan değiştirmez; somut program seçeneklerini etkiler.
 
 ### Soru pipeline'ı
 
 ```mermaid
 flowchart TD
-    A[YKS sonucum belli] --> B[Sonuç bilgilerini gir]
-    B --> C[TYT / SAY / EA / SÖZ / DİL sonuçlarını kaydet]
-    C --> P[Şehir ve tercih koşullarını al]
-    P --> D[Son 3 yıllık veriyi karşılaştır]
-    D --> E[Programları güvenli / hedef / iddialı olarak ayır]
-    E --> Q1[Persona sorusu 1]
-    Q1 --> U1[Cevabı işle ve programları yeniden sırala]
-    U1 --> Q2[En ayırt edici sonraki soruyu seç]
-    Q2 --> U2[Persona ve program skorlarını güncelle]
-    U2 --> R[10. soruya kadar tekrarla]
-    R --> V[Tutarlılık kontrolü]
-    V --> S[Nihai öneri skorunu hesapla]
-    S --> O[En uygun 5 bölümü açıkla]
+    K_START["YKS puanım var"] --> K_SCORES["Sınav yılı, puan türleri, puanlar ve başarı sıraları"]
+    K_SCORES --> K_CITY["Yaşadığı şehir ve şehir dışına çıkma tercihi"]
+    K_CITY --> K_PREF["İsteğe bağlı bütçe, burs ve eğitim tercihleri"]
+    K_PREF --> K_POOL["Geçmiş yerleştirme verileriyle program havuzunu oluştur"]
+    K_POOL --> K_FIRST["Genel ilgiyle başlayan ilk soruyu göster"]
+    K_FIRST --> K_ANSWER["Cevabı al ve kariyer profilini güncelle"]
+    K_ANSWER --> K_COUNT{"10 soru tamamlandı mı?"}
+    K_COUNT -->|Hayır| K_NEXT["Profil ve aday programlara göre sonraki soruyu seç ve göster"]
+    K_NEXT --> K_ANSWER
+    K_COUNT -->|Evet| K_MATCH["Persona uyumu ve akademik uygunluğu değerlendir"]
+    K_MATCH --> K_FUTURE["Kaynaklı gelecek değerlendirmesini ekle"]
+    K_FUTURE --> K_RESULT["En uygun programları gerekçeleriyle göster"]
 ```
 
-Sorular, kullanıcının erişebildiği programları birbirinden ayırmaya odaklanır. Örneğin kullanıcının sıralaması hem hemşirelik hem bilgisayar mühendisliği programlarına yetiyorsa şu soru gösterilebilir:
+Sorular genel ilgiden başlar; önceki cevapların tamamına göre ilerler ve aday programları ayırmaya odaklanır. Örneğin kullanıcının sıralaması hem hemşirelik hem bilgisayar mühendisliği programlarına yetiyorsa şu soru gösterilebilir:
 
 > **Yoğun bir iş gününde hangisi sana daha uygun gelir?**
 >
 > - A) İnsanlarla doğrudan ilgilenmek
 > - B) Teknik bir sistem üzerinde çalışmak
 
-A cevabı sağlık alanını, B cevabı mühendislik ve teknoloji alanını derinleştirir.
+A cevabı insan teması, B cevabı teknik çalışma tercihine ilişkin sinyal üretir. Tek başına sağlık veya mühendislik kararı vermez; diğer kariyer ailelerini tamamen kapatmaz.
 
 ### Öneri skoru
 
-| Bileşen | Başlangıç ağırlığı |
-|---|---:|
-| Akademik erişilebilirlik | %40 |
-| Persona uyumu | %35 |
-| Bölümün gelecek potansiyeli | %15 |
-| Kullanıcı tercihleri ve koşulları | %10 |
-
-Bu ağırlıklar gerçek kullanıcı sonuçları ve uzman değerlendirmeleriyle kalibre edilebilir.
+Akademik uygunluk, persona uyumu, tercih koşulları ve gelecek değerlendirmesi ayrı açıklanır. Önceki sürümdeki %40/%35 gibi ağırlıklar doğrulanmış bir model değildir; nihai oranlar olarak kullanılmaz. Sıralama ağırlıkları teknik model ve değerlendirme çalışmasında belirlenecektir.
 
 ### Sonuç ekranı
 
-En uygun beş program için şunlar gösterilir:
+En fazla beş ana program önerisi ve uygun alternatifler için şunlar gösterilir:
 
-- Üniversite ve bölüm adı
+- Üniversite, bölüm, şehir ve eğitim koşulları
 - Güvenli, hedef veya iddialı etiketi
-- Persona uyum skoru
+- Persona uyumunu destekleyen cevaplar
 - Son üç yılın başarı sırası ve puan değişimi
 - Önerilme gerekçesi
 - Kullanıcıyla uyuşmayabilecek yönler
 - Tipik eğitim ve çalışma biçimi
+- Bölümden ilerlenebilecek kariyer yolları
 - Gelecek potansiyeli ve dayandığı veriler
 - Verinin yılı ve kaynağı
 
-## YKS sonucu belli olmayan kullanıcı
+## Pipeline 2 — YKS puanım yok
+
+Amaç: Kullanıcının ilgi ve beklentilerini keşfetmek; geleceğini şekillendirebileceği kariyerleri, bölümleri ve eğitim yollarını göstermek. Puan veya tahmini net girişi bu akışın ön koşulu değildir.
 
 ### Başlangıç program havuzu
 
-Başlangıçta bütün bölüm aileleri değerlendirilir:
+Başlangıçta geniş kariyer ve bölüm aileleri değerlendirilir:
 
 - Sağlık
 - Mühendislik ve teknoloji
@@ -186,23 +171,27 @@ Başlangıçta bütün bölüm aileleri değerlendirilir:
 - Turizm ve hizmet
 - Ön lisans ve teknik programlar
 
+Müzisyenlik, ressamlık, girişimcilik veya yatırım alanında çalışma gibi hedefler de kariyer bağlamında ele alınır. Üniversite ve alternatif eğitim yolları ayrı tanımlanır.
+
+Şehir ve bütçe somut eğitim seçeneklerini etkiler; öğrencinin kariyer ilgisini belirlemez. Örneğin şehirde bir müzik programı bulunmaması, müziğe ilgiyi profilinden silmez.
+
 ### Soru pipeline'ı
 
 ```mermaid
 flowchart TD
-    A[YKS sonucum belli değil] --> P[Şehir ve tercih koşullarını al]
-    P --> B[Tüm bölüm ailelerini başlangıç havuzuna al]
-    B --> Q1[Geniş ayrım yapan soru 1]
-    Q1 --> U1[Persona skorlarını güncelle]
-    U1 --> E1[Uyumsuz alanların ağırlığını azalt]
-    E1 --> Q2[Kalan alanları en iyi ayıran soruyu seç]
-    Q2 --> U2[Persona ve alan skorlarını güncelle]
-    U2 --> D[Belirginleşen alanı derinleştir]
-    D --> R[10. soruya kadar tekrarla]
-    R --> V[Tutarlılık kontrolü]
-    V --> P[Persona profilini oluştur]
-    P --> F[Persona + gelecek potansiyeli eşleştirmesi]
-    F --> O[En uygun 5 bölüm ve hedef sıralamalar]
+    U_START["YKS puanım yok"] --> U_CITY["Yaşadığı şehir ve şehir dışına çıkma tercihi"]
+    U_CITY --> U_PREF["İsteğe bağlı bütçe, burs ve eğitim tercihleri"]
+    U_PREF --> U_POOL["Geniş kariyer ve bölüm havuzuyla başla"]
+    U_POOL --> U_FIRST["Genel ilgiyle başlayan ilk soruyu göster"]
+    U_FIRST --> U_ANSWER["Cevabı al ve kariyer profilini güncelle"]
+    U_ANSWER --> U_COUNT{"10 soru tamamlandı mı?"}
+    U_COUNT -->|Hayır| U_NEXT["İlgi, çalışma biçimi ve hedefleri araştıran sonraki soruyu seç ve göster"]
+    U_NEXT --> U_ANSWER
+    U_COUNT -->|Evet| U_MATCH["Uygun kariyerleri ve bölüm ailelerini belirle"]
+    U_MATCH --> U_PATHS["Üniversite ve alternatif eğitim yollarını eşleştir"]
+    U_PATHS --> U_PROGRAMS["Tercih koşullarına uygun program örneklerini bul"]
+    U_PROGRAMS --> U_FUTURE["Hedef sıralamaları ve kaynaklı gelecek değerlendirmesini ekle"]
+    U_FUTURE --> U_RESULT["Kariyer ve eğitim önerilerini gerekçeleriyle göster"]
 ```
 
 Örnek ilk dallanma:
@@ -222,24 +211,24 @@ Gerçek soru seçimi, kullanıcının tüm önceki cevaplarına ve henüz ölç�
 
 ### Öneri skoru
 
-| Bileşen | Başlangıç ağırlığı |
-|---|---:|
-| Persona uyumu | %55 |
-| Bölümün gelecek potansiyeli | %25 |
-| Eğitim ve çalışma beklentisi | %10 |
-| Kullanıcı tercihleri ve koşulları | %10 |
+Kariyer uyumu, eğitim beklentisi, tercih koşulları ve gelecek değerlendirmesi birlikte ele alınır. Önceki sürümdeki %55/%25 gibi ağırlıklar doğrulanmış bir model değildir; nihai oranlar teknik değerlendirmeyle belirlenecektir.
 
 ### Sonuç ekranı
 
 - Kısa persona özeti
 - Baskın ilgi ve çalışma biçimleri
-- En uygun beş bölüm
+- En fazla beş ana kariyer/bölüm önerisi
+- Bu kariyerlere götüren üniversite ve alternatif eğitim yolları
+- Tercih koşullarına uygun üniversite programlarından örnekler
+- Başlamak için somut gelişim önerileri
 - Her bölümün önerilme gerekçesi
 - Kullanıcıyla uyuşmayabilecek yönler
 - Tipik eğitim ve çalışma biçimi
 - Gelecek potansiyeli
 - Son üç yıl verilerine göre hedef başarı sırası aralığı
 - Benzer ve alternatif bölümler
+
+Üniversite gerektirmeyen veya farklı kabul süreçleri olan yollara yapay bir YKS sıralama hedefi atanmaz. Özel yetenek veya diğer kabul süreçleri ayrı açıklanır.
 
 ## Ortak adaptif döngü
 
@@ -248,7 +237,9 @@ flowchart LR
     A[İki seçenekli soru] --> B[Kullanıcı A veya B seçer]
     B --> C[Persona skorlarını güncelle]
     C --> D[Aday bölümleri yeniden sırala]
-    D --> E[Ölçülmemiş en önemli ayrımı bul]
+    D --> G{10 cevap tamamlandı mı?}
+    G -->|Evet| H[Seçilen pipeline için sonuç üret]
+    G -->|Hayır| E[Ölçülmemiş en önemli ayrımı bul]
     E --> F[Sonraki soruyu 300 soruluk havuzdan seç]
     F --> A
 ```
@@ -261,6 +252,10 @@ Her cevaptan sonra sistem:
 4. Kalan programları en iyi ayıracak soruyu seçer.
 5. Aynı soru ailesinden arka arkaya soru göstermemeye çalışır.
 6. Son adımda önceki çıkarımları farklı bir senaryoyla kontrol eder.
+
+Onuncu soru, testin içindeki belirsizlik veya tutarlılık kontrolüdür; ayrıca on birinci soru sorulmaz. “Emin değilim” seçeneği bulunmaz, ancak A seçimi B'yi kesinlikle istememek anlamına gelmez.
+
+İlk 1–3 soru genel ilgiye, 4–6 eğilimleri derinleştirirken alternatifleri araştırmaya, 7–9 yakın kariyerlerin günlük koşullarını ayırmaya odaklanır. Bunlar sabit soru metinleri değildir.
 
 ## Persona boyutları
 
@@ -281,6 +276,10 @@ Persona tek bir meslek etiketi değil, aşağıdaki boyutların sayısal birleş
 - Uzun eğitim sürecine ve mesleki sorumluluğa yaklaşım
 
 Yapı, mesleki ilgi için RIASEC yaklaşımından ve iş değerleri çerçevelerinden yararlanır; Türkiye'deki program ve çalışma koşullarına göre uyarlanır.
+
+Eşleştirme sırası: **Kullanıcı profili → kariyerler → eğitim yolları → üniversite programları**. Meslek, bölüm ve somut üniversite programı ayrı kavramlardır.
+
+On cevap bütün boyutların yeterince ölçüldüğü anlamına gelmez. Cevaplarla desteklenen çıkarımlar ve ölçülmemiş yönler sonuçta ayrılır. İlgi soruları ölçülmüş yetenek veya kesin kişilik teşhisi gibi sunulmaz; doğrulanmamış güven yüzdesi gösterilmez.
 
 ## 300 soruluk havuz
 
@@ -344,9 +343,11 @@ Bir sonraki soru şu sinyallerle seçilir:
 
 Soru seçimi deterministik kurallar ve sayısal skorlarla yapılır. Aynı girdiler açıklanabilir ve tutarlı bir yol üretmelidir. Büyük dil modeli temel puanlama kurallarının yerine geçmez.
 
+Eşitlikte sabit öncelik, ardından soru kimliği kullanılır. Uygun özel soru kalmazsa ortak havuzdan tekrar etmeyen genel soru seçilir. Her iki akışın 10 adımı tamamlayabilmesi soru bankasının yayımlanma koşuludur. Seçim formülü ve boyut ağırlıkları ayrıca tanımlanıp doğrulanacaktır.
+
 ## Arayüz davranışları
 
-- YKS yolunun seçilmesinden sonra şehir ve tercih koşulları ekranı gösterilir.
+- Puanı olan kullanıcı önce sınav sonuçlarını, ardından tercih koşullarını girer. Puanı olmayan kullanıcı doğrudan tercih koşullarıyla başlar.
 - Şehir alanı aranabilir bir liste kullanır ve konum izni istemez.
 - Kesin filtreler ile sıralamayı etkileyen tercihler arayüzde açıkça ayrılır.
 - Her ekranda tek soru gösterilir.
@@ -355,6 +356,7 @@ Soru seçimi deterministik kurallar ve sayısal skorlarla yapılır. Aynı girdi
 - Kullanıcı önceki soruya dönebilir.
 - Önceki cevap değişirse sonraki soru yolu yeniden hesaplanır.
 - Geçersiz kalan eski cevaplar sonuç hesabında kullanılmaz.
+- Şehir veya bütçe değiştiğinde program önerileri yeniden hesaplanır; cevaplardan çıkarılmış ilgi profili korunur. Yeni koşullara özgü ölçülmemiş yönler ölçülmüş sayılmaz.
 - Test yarıda kalırsa kullanıcı devam edebilir.
 - Veri yüklenemezse yeniden deneme sunulur; uydurma sonuç gösterilmez.
 
@@ -390,6 +392,8 @@ Her yorumda veri yılı ve kaynak gösterilir. Olumlu sinyaller, riskler ve beli
 | Geçmiş yıl verisi eksik | Eksik yıl belirtilir ve güven seviyesi düşürülür. |
 | Cevaplar çelişir | Son adımlardan biri çelişkiyi farklı senaryoyla kontrol eder. |
 | İki alan eşit çıkar | İki güçlü yön birlikte gösterilir; kullanıcı tek tipe zorlanmaz. |
+| Beşten az uygun sonuç vardır | İlgisiz önerilerle liste tamamlanmaz; mevcut seçenekler gösterilir. |
+| Gelecek analizi verisi yoktur | Profil ve doğrulanmış program bilgileri gösterilir; analiz eksikliği açıklanır. |
 | Kullanıcı şehir dışında okumak istemez | Yalnızca yaşadığı şehirdeki programlar değerlendirilir. |
 | Kullanıcı Türkiye genelini değerlendirir | Şehir kesin filtre olmaz; diğer uyum sinyalleri öncelik kazanır. |
 | Hiçbir program açık kısıtları karşılamaz | Etkili kısıtlar açıklanır ve değiştirilebilir filtreler gösterilir. |
@@ -411,7 +415,8 @@ Soru ağırlıkları gerçek kullanım verileri ve uzman değerlendirmeleriyle s
 
 ## Kabul kriterleri
 
-- Başlangıç ekranında iki ayrı YKS durumu butonu bulunmalıdır.
+- Başlangıç ekranında “YKS puanım var” ve “YKS puanım yok” girişleri bulunmalıdır.
+- Her girişin ayrı başlangıcı, soru seçimi bağlamı ve sonuç ekranı olmalıdır.
 - Kullanıcıya ayrıca “YKS sonucun belli mi?” sorusu sorulmamalıdır.
 - Şehir ve tercih koşulları her iki kullanıcı yolunda persona testinden önce alınmalıdır.
 - Şehir ve tercih koşulları 10 persona sorusuna dahil edilmemelidir.
@@ -422,6 +427,8 @@ Soru ağırlıkları gerçek kullanım verileri ve uzman değerlendirmeleriyle s
 - Her cevap sonraki soruyu ve persona skorunu etkilemelidir.
 - YKS sonucu belli kullanıcıda program havuzu akademik verilerle önceden daraltılmalıdır.
 - YKS sonucu belli olmayan kullanıcıda tüm bölüm aileleri başlangıçta değerlendirilmelidir.
+- Akademik sıralama, şehir ve bütçe doğrudan persona puanını değiştirmemelidir.
+- Her iki soru döngüsü onuncu cevaptan sonra sonuca ulaşmalıdır.
 - Önceki cevap değiştiğinde sonraki yol yeniden hesaplanmalıdır.
 - Sonuçlarda gerekçeler, uyumsuzluk ihtimalleri, veri yılı ve kaynaklar gösterilmelidir.
 - Eksik veri AI tarafından tahmin edilmemelidir.
@@ -430,3 +437,5 @@ Soru ağırlıkları gerçek kullanım verileri ve uzman değerlendirmeleriyle s
 ## Kapsam sınırı
 
 Bu belge adaptif soru ve öneri pipeline'ını tanımlar. Üç yüz sorunun nihai metinleri, meslek-program eşleştirme veri seti, veri toplama servisinin teknik uygulaması ve kullanıcı arayüzünün görsel tasarımı ayrı çalışma paketleridir.
+
+Soru seçimi formülü, akademik uygunluk eşikleri, sıralama ağırlıkları ve on soruluk ölçümün kapsama/tutarlılık değerlendirmesi ayrıca tamamlanacaktır. Ürün akışının onaylanması, ölçüm modelinin doğrulandığı veya uygulamanın hazır olduğu anlamına gelmez.
