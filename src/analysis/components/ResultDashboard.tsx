@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Results } from "../../../engine/index.js";
+import type { GroupProgram, Results } from "../../../engine/index.js";
 import { loadOverfit } from "../data/overfitBridge";
 import { DIMENSIONS, type DimensionKey } from "../data/questionPool";
 import { CAREER_DETAILS } from "../data/recommendations";
@@ -15,6 +15,30 @@ type ResultDashboardProps = {
 };
 
 const sayi = new Intl.NumberFormat("tr-TR");
+
+/**
+ * Bir üniversite satırı. Adayın sırası varsa son üç yılda kaç yıl tuttuğunu
+ * söyler — taban sırası oynayan bir programa "kesin girersin" demiyoruz.
+ */
+function ProgramRow({ program, siraVar }: { program: GroupProgram; siraVar: boolean }) {
+  const nitelik = [program.scoreType, program.language, program.scholarship]
+    .filter(Boolean)
+    .join(" · ");
+  const tutan = program.reachedYears.length;
+  return <li className={siraVar && program.reachable ? "uni tuttu" : "uni"}>
+    <span className="uni-ad">{program.university}</span>
+    <span className="uni-meta">{program.city} · {nitelik}</span>
+    <span className="uni-sira">
+      {program.currentRank === null
+        ? "2026 sırası yayımlanmadı"
+        : `2026 taban ${sayi.format(program.currentRank)}.`}
+      {siraVar && program.yearsWithData > 0 && <b>
+        {tutan > 0 ? `${tutan}/${program.yearsWithData} yıl tuttu` : "sıran yetmiyor"}
+      </b>}
+    </span>
+  </li>;
+}
+
 
 /**
  * Erişim satırı. Veri yoksa sessiz kalmaz, nedenini söyler —
@@ -76,6 +100,16 @@ export function ResultDashboard({ mode, context, analysis, onRestart, onReview }
                   {sayi.format(group.programCount)} program · {group.levels.join("/")}
                   {accessNote(group)}
                 </small>
+                {group.programs.length > 0 && <ul className="uni-list">
+                  <li className="uni-baslik">
+                    {academic?.ranks ? "Sıranın yettiği üniversiteler" : "Bu bölümün açıldığı üniversiteler"}
+                  </li>
+                  {group.programs.map((program) => <ProgramRow
+                    key={program.code}
+                    program={program}
+                    siraVar={Boolean(academic?.ranks)}
+                  />)}
+                </ul>}
               </span>
               <em>{index === 0 ? "Güçlü uyum" : "Yakın uyum"}</em>
             </div>)}

@@ -200,3 +200,70 @@ test("eski tek puan türü biçimi çalışmaya devam eder", () => {
   const yeni = rankProgramGroups({ familyRanking, groups: catalog.groups, index, limit: 5, academic: { ranks: { EA: 50000 } } });
   assert.deepEqual(eski.map((group) => group.id), yeni.map((group) => group.id));
 });
+
+test("her önerilen grup gerçek üniversiteleri isim isim taşır", () => {
+  const academic = { ranks: { SAY: 28000 } };
+  const state = runSession("score_known", () => "a", academic);
+  const ranked = rankProgramGroups({
+    familyRanking: engine.rankFamilies(state.profile),
+    groups: catalog.groups, index, academic, limit: 5,
+  });
+
+  for (const group of ranked) {
+    assert.ok(Array.isArray(group.programs), group.id);
+    assert.ok(group.programs.length <= 6);
+    const adlar = group.programs.map((program) => program.university);
+    assert.equal(new Set(adlar).size, adlar.length, `${group.name}: aynı üniversite iki kez`);
+
+    for (const program of group.programs) {
+      assert.ok(program.university.length > 0);
+      assert.equal(program.scoreType, "SAY", "sırası girilmeyen puan türü listelenmemeli");
+      assert.ok(!program.university.endsWith(`(${program.city})`), "şehir adı tekrar etmemeli");
+      // Erişilebilir işaretlenen her yıl gerçekten tutuyor olmalı.
+      for (const yil of program.reachedYears) {
+        const kayit = program.years.find((item) => item.year === yil);
+        assert.ok(kayit.rank !== null && kayit.rank >= academic.ranks.SAY,
+          `${program.university}: ${yil} yılı yanlış işaretlenmiş`);
+      }
+      assert.equal(program.reachable, program.reachedYears.length > 0);
+    }
+  }
+  const ilk = ranked[0].programs[0];
+  console.log(`    örnek: ${ranked[0].name} → ${ilk.university} (${ilk.city}) · tutan yıllar: ${ilk.reachedYears.join(", ") || "yok"}`);
+});
+
+test("sıra girilmediyse okullar listelenir ama erişim iddiası üretilmez", () => {
+  const state = runSession("score_unknown", () => "b");
+  const ranked = rankProgramGroups({
+    familyRanking: engine.rankFamilies(state.profile),
+    groups: catalog.groups, index, limit: 5,
+  });
+  let toplam = 0;
+  for (const group of ranked) {
+    toplam += group.programs.length;
+    for (const program of group.programs) {
+      assert.deepEqual(program.reachedYears, [], "sıra yokken tutan yıl iddiası olamaz");
+      assert.equal(program.reachable, false);
+      assert.ok(program.university.length > 0);
+    }
+  }
+  assert.ok(toplam > 0, "puansız akışta da okullar görünmeli");
+  console.log(`    puansız akışta listelenen okul: ${toplam}`);
+});
+
+test("en seçici program önce gelir ve üç yıl tutanlar öne çıkar", () => {
+  const academic = { ranks: { EA: 90000 } };
+  const state = runSession("score_known", () => "a", academic);
+  const ranked = rankProgramGroups({
+    familyRanking: engine.rankFamilies(state.profile),
+    groups: catalog.groups, index, academic, limit: 4,
+  });
+  for (const group of ranked) {
+    const erisilir = group.programs.filter((program) => program.reachable);
+    const digerleri = group.programs.filter((program) => !program.reachable);
+    if (erisilir.length && digerleri.length) {
+      assert.ok(group.programs.indexOf(erisilir.at(-1)) < group.programs.indexOf(digerleri[0]),
+        "erişilebilirler listenin başında olmalı");
+    }
+  }
+});

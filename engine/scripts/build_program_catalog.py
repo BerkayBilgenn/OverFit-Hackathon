@@ -26,7 +26,10 @@ csv.field_size_limit(10_000_000)
 
 PROGRAM_COLUMNS = [
     "code", "group", "uni", "city", "level", "scoreType", "lang",
-    "uniType", "burs", "quota", "placed", "rank", "score", "rankPrev",
+    "uniType", "burs", "quota", "placed",
+    # Üç yıllık başarı sırası: 2026 (cari), 2025, 2024.
+    # Bir programın sırası yıllar içinde oynuyorsa öğrenci bunu görmeli.
+    "rank", "score", "rankPrev", "rankPrev2",
 ]
 
 
@@ -107,6 +110,7 @@ def build_catalog(zip_path: Path) -> dict:
             rank,
             _number(extra.get("taban_puan", "")),
             _number(extra.get("basari_sirasi_gecen_yil", "")),
+            _number(extra.get("basari_sirasi_2_yil_once", "")),
         ]
         rows.append(row)
 
