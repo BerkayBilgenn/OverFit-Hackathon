@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
+import type { Results } from "../../../engine/index.js";
+import { loadOverfit } from "../data/overfitBridge";
 import { DIMENSIONS, type DimensionKey } from "../data/questionPool";
-import { CAREER_DETAILS, getRecommendations } from "../data/recommendations";
+import { CAREER_DETAILS } from "../data/recommendations";
 import type { AnalysisContext } from "../types";
 import type { AnalysisResult } from "./AdaptiveQuiz";
 
@@ -11,31 +14,77 @@ type ResultDashboardProps = {
   onReview: () => void;
 };
 
+const sayi = new Intl.NumberFormat("tr-TR");
+
+/**
+ * Erişim satırı. Veri yoksa sessiz kalmaz, nedenini söyler —
+ * yayımlanmamış sıra ile "giremezsin" birbirine karıştırılmamalı.
+ */
+function accessNote(group: Results["groups"][number]): string {
+  const access = group.access;
+  if (!access || !access.scoreTypes.length) return "";
+  if (access.eligible === 0) return ` · ${group.scoreTypes.join("/")} puanıyla tercih ediliyor, girdiğin ${access.scoreTypes.join("/")} sırası burada geçerli değil`;
+  if (access.reachable > 0) return ` · sıranın yettiği ${sayi.format(access.reachable)} program`;
+  if (access.withRank > 0) return " · bu grupta sıranın yettiği program yok";
+  return " · taban sırası yayımlanmamış, erişim hesaplanamadı";
+}
+
 export function ResultDashboard({ mode, context, analysis, onRestart, onReview }: ResultDashboardProps) {
+  const [results, setResults] = useState<Results | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadOverfit()
+      .then((overfit) => { if (!cancelled) setResults(overfit.results(analysis.session, { groupLimit: 5 })); })
+      .catch((cause: unknown) => console.error(cause));
+    return () => { cancelled = true; };
+  }, [analysis.session]);
+
   const sorted = (Object.entries(analysis.scores) as Array<[DimensionKey, number]>).sort((a, b) => b[1] - a[1]);
   const top = sorted[0]?.[0] ?? "analytic";
-  const programs = getRecommendations(context.primaryField, top);
   const detail = CAREER_DETAILS[top];
   const scoreTypes = context.scores ? Object.keys(context.scores).join(" + ") : "Geniş kariyer havuzu";
+  const academic = results?.academic ?? null;
 
   return <section className="analysis-page result-page">
     <header className="result-hero">
       <div className="eyebrow">KİŞİSEL PUSULA PROFİLİN</div>
-      <h1>{DIMENSIONS[top]} odaklı profil</h1>
-      <p>{scoreTypes} ve {context.preferences?.city} tercih koşulun birlikte değerlendirilerek araştırma rotaların oluşturuldu.</p>
+      <h1>{results ? results.families[0].label : DIMENSIONS[top]} odaklı profil</h1>
+      <p>{results ? results.summaryText : `${scoreTypes} ve ${context.preferences?.city ?? "tercih"} koşulun değerlendiriliyor…`}</p>
     </header>
     <div className="result-layout">
       <div className="stack">
-        <article className="analysis-card"><h2>{mode === "score_known" ? "Önerilen programlar" : "Kariyer ve bölüm rotaları"}</h2><p className="muted">Akademik uygunluk ve yönelim gerekçesi ayrı değerlendirilir.</p><div className="program-list">{programs.map((name, index) => <div key={name}><b>0{index + 1}</b><span><strong>{name}</strong><small>{index === 0 ? "Birincil araştırma rotası" : "Uygun alternatif rota"}</small></span><em>{index === 0 ? "Güçlü uyum" : "Yakın uyum"}</em></div>)}</div></article>
+        <article className="analysis-card">
+          <h2>{mode === "score_known" ? "Önerilen programlar" : "Kariyer ve bölüm rotaları"}</h2>
+          <p className="muted">
+            {academic?.ranks
+              ? `${Object.entries(academic.ranks).map(([type, rank]) => `${type} ${sayi.format(rank as number)}.`).join(" · ")} başarı sırasına göre 2026 taban sıralarıyla karşılaştırıldı.`
+              : "Yönelim gerekçesine göre sıralandı; başarı sırası girilmediği için erişim hesaplanmadı."}
+          </p>
+          <div className="program-list">
+            {(results?.groups ?? []).map((group, index) => <div key={group.id}>
+              <b>0{index + 1}</b>
+              <span>
+                <strong>{group.name}</strong>
+                <small>
+                  {sayi.format(group.programCount)} program · {group.levels.join("/")}
+                  {accessNote(group)}
+                </small>
+              </span>
+              <em>{index === 0 ? "Güçlü uyum" : "Yakın uyum"}</em>
+            </div>)}
+            {!results && <div><b>—</b><span><strong>Bölüm verisi yükleniyor…</strong><small>21.493 program taranıyor</small></span><em></em></div>}
+          </div>
+        </article>
         <article className="analysis-card"><h2>Kariyer yönleri</h2><div className="career-grid">{detail.paths.map((path, index) => <div key={path}><i>0{index + 1}</i><b>{path}</b><span>Bu rota için ders, staj ve günlük çalışma koşullarını incele.</span></div>)}</div></article>
         <article className="analysis-card"><h2>Avantajlar ve dikkat noktaları</h2><div className="pros-cons"><div><h3>Avantajlar</h3>{detail.pros.map((item) => <p key={item}>✓ {item}</p>)}</div><div><h3>Dikkat</h3>{detail.cons.map((item) => <p key={item}>! {item}</p>)}</div></div></article>
-        <article className="analysis-card"><h2>Kazanç senaryosu</h2><div className="salary">{["Başlangıç", "3–5 yıl", "Uzman / lider"].map((label, index) => <div key={label}><span>{label}</span><b>{detail.salary[index]}</b></div>)}</div><p className="disclaimer">Gösterilen aralıklar başlangıç verisidir; canlı üründe tarih ve kaynak gösteren verilerle güncellenmelidir.</p></article>
+        <article className="analysis-card"><h2>Kazanç senaryosu</h2><div className="salary">{["Başlangıç", "3–5 yıl", "Uzman / lider"].map((label, index) => <div key={label}><span>{label}</span><b>{detail.salary[index]}</b></div>)}</div><p className="disclaimer">Gösterilen aralıklar başlangıç verisidir; YÖK Atlas mezun istihdam ve gelir verisi yayımlamadığı için bu rakamlar kaynaklandırılmamıştır.</p></article>
       </div>
       <aside className="stack">
         <article className="analysis-card"><h2>Ölçülen eğilimler</h2>{sorted.slice(0, 4).map(([key, value]) => <div className="trait" key={key}><span>{DIMENSIONS[key]}</span><div><i style={{ width: `${value}%` }} /></div></div>)}</article>
+        <article className="analysis-card"><h2>Yakın kariyer aileleri</h2>{(results?.families ?? []).map((family) => <div className="trait" key={family.id}><span>{family.label}</span><div><i style={{ width: `${Math.round(family.score * 100)}%` }} /></div></div>)}<p className="disclaimer">Aile ağırlıkları editoryal varsayımdır; YÖK Atlas 2026'da Meslek Atlası kaldırıldı.</p></article>
         <article className="analysis-card"><h2>İş görünümü</h2><strong>{detail.market}</strong><p className="disclaimer">Staj, portföy, şehir, dil ve bağlantılar iş bulma sonucunu değiştirir.</p></article>
-        <article className="analysis-card"><h2>Eğitim seçenekleri</h2><div className="bands"><p><b>{mode === "score_known" ? "İddialı" : "Üniversite"}</b> Güncel program verisiyle doğrula</p><p><b>{mode === "score_known" ? "Hedef" : "Alternatif"}</b> Şehir ve bütçeyle karşılaştır</p><p><b>{mode === "score_known" ? "Güvenli" : "Özel kabul"}</b> Kabul koşullarını ayrı incele</p></div></article>
-        <article className="analysis-card"><h2>Kararını doğrula</h2><ul><li>Bir öğrenci veya mezunla görüş</li><li>Mini proje ya da atölye dene</li><li>Ders planlarını karşılaştır</li></ul><p className="disclaimer">Sonuçlar 10 yanıttan çıkarılan eğilimlerdir; başarı veya iş garantisi değildir.</p></article>
+        <article className="analysis-card"><h2>Kararını doğrula</h2><ul><li>Bir öğrenci veya mezunla görüş</li><li>Mini proje ya da atölye dene</li><li>Ders planlarını karşılaştır</li></ul>{(results?.warnings ?? []).map((warning) => <p className="disclaimer" key={warning}>{warning}</p>)}<p className="disclaimer">Bağlayıcı kaynak ÖSYM'nin güncel kılavuzudur.</p></article>
         <div className="actions"><button className="analysis-primary" type="button" onClick={onRestart}>Yeni analiz</button><button type="button" onClick={onReview}>Yanıtları gözden geçir</button></div>
       </aside>
     </div>
