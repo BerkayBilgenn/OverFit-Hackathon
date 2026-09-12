@@ -18,6 +18,7 @@ Kullanıcının sınıf seviyesi ana akışı değiştirmez.
 ## Temel ilkeler
 
 - Kullanıcı toplam 10 soru cevaplar.
+- YKS sonucu, şehir ve tercih koşulları 10 persona sorusunun dışında alınır.
 - Her soruda iki cevap seçeneği bulunur.
 - Her cevap, bir sonraki sorunun seçimini etkiler.
 - Sorular sabit bir sırayla gösterilmez.
@@ -52,15 +53,39 @@ flowchart TD
     A --> C[YKS sonucum belli değil]
     B --> D[YKS sonuçlarını gir]
     D --> E[Puan türü ve başarı sıralamalarını doğrula]
-    E --> F[Ulaşılabilir program havuzunu oluştur]
+    E --> P1[Şehir ve tercih koşullarını al]
+    P1 --> F[Ulaşılabilir program havuzunu oluştur]
     F --> G[10 soruluk adaptif persona testi]
     G --> H[Akademik uygunluk + persona + gelecek analizi]
     H --> I[Kişiselleştirilmiş bölüm önerileri]
-    C --> J[Tüm bölüm ailelerini aday havuzuna al]
+    C --> P2[Şehir ve tercih koşullarını al]
+    P2 --> J[Tüm bölüm ailelerini aday havuzuna al]
     J --> K[10 soruluk adaptif persona testi]
     K --> L[Persona + hedefler + gelecek analizi]
     L --> M[Bölüm önerileri ve hedef başarı sıraları]
 ```
+
+## Şehir ve tercih koşulları
+
+Şehir ve eğitim tercihleri her iki kullanıcı yolunda 10 soruluk persona testinden önce alınır. Bu bilgiler öğrencinin kişiliğini ölçmez; hangi programların uygulanabilir olduğunu belirler. Bu nedenle 10 soruya dahil edilmez.
+
+### Alınacak bilgiler
+
+1. **Şu anda hangi şehirde yaşıyorsun?** Kullanıcı şehrini aranabilir listeden seçer. Konum izni zorunlu değildir.
+2. **Üniversite için başka bir şehre taşınmayı düşünür müsün?**
+   - Evet, düşünebilirim
+   - Hayır, yaşadığım şehirde kalmak istiyorum
+3. Kullanıcı taşınabileceğini belirtirse değerlendirmek istediği şehirleri seçebilir veya Türkiye genelini değerlendirebilir.
+4. Kullanıcı isterse devlet/vakıf üniversitesi, yıllık eğitim bütçesi, burs gereksinimi, eğitim dili ve öğretim türü tercihlerini ekleyebilir.
+
+### Filtre davranışı
+
+- “Yaşadığım şehirde kalmak istiyorum” cevabı şehir için kesin filtre oluşturur.
+- “Taşınabilirim” cevabında şehirler varsayılan olarak sıralama tercihi olur; kullanıcı belirli şehirleri kesin filtre olarak işaretleyebilir.
+- Bütçe ve burs koşulları kullanıcı tarafından kesin sınır olarak belirtildiyse bu sınırı aşan programlar gösterilmez.
+- Eğitim dili, üniversite türü ve öğretim türü varsayılan olarak sıralama sinyalidir; kullanıcı bunları kesin filtreye dönüştürebilir.
+- Filtreler hiç sonuç bırakmazsa sistem sessizce boş ekran göstermez. Sonucu engelleyen koşulları açıklar ve kullanıcının filtreleri değiştirmesine izin verir.
+- Kullanıcı sonuç ekranında tercih koşullarını değiştirerek önerileri yeniden hesaplayabilir.
 
 ## YKS sonucu belli kullanıcı
 
@@ -92,7 +117,8 @@ Yıllar arasındaki oynaklık hesaba katılır ve kesin yerleşme garantisi üre
 flowchart TD
     A[YKS sonucum belli] --> B[Sonuç bilgilerini gir]
     B --> C[TYT / SAY / EA / SÖZ / DİL sonuçlarını kaydet]
-    C --> D[Son 3 yıllık veriyi karşılaştır]
+    C --> P[Şehir ve tercih koşullarını al]
+    P --> D[Son 3 yıllık veriyi karşılaştır]
     D --> E[Programları güvenli / hedef / iddialı olarak ayır]
     E --> Q1[Persona sorusu 1]
     Q1 --> U1[Cevabı işle ve programları yeniden sırala]
@@ -164,7 +190,8 @@ Başlangıçta bütün bölüm aileleri değerlendirilir:
 
 ```mermaid
 flowchart TD
-    A[YKS sonucum belli değil] --> B[Tüm bölüm ailelerini başlangıç havuzuna al]
+    A[YKS sonucum belli değil] --> P[Şehir ve tercih koşullarını al]
+    P --> B[Tüm bölüm ailelerini başlangıç havuzuna al]
     B --> Q1[Geniş ayrım yapan soru 1]
     Q1 --> U1[Persona skorlarını güncelle]
     U1 --> E1[Uyumsuz alanların ağırlığını azalt]
@@ -319,6 +346,9 @@ Soru seçimi deterministik kurallar ve sayısal skorlarla yapılır. Aynı girdi
 
 ## Arayüz davranışları
 
+- YKS yolunun seçilmesinden sonra şehir ve tercih koşulları ekranı gösterilir.
+- Şehir alanı aranabilir bir liste kullanır ve konum izni istemez.
+- Kesin filtreler ile sıralamayı etkileyen tercihler arayüzde açıkça ayrılır.
 - Her ekranda tek soru gösterilir.
 - İki cevap eşit öneme sahip seçim kartlarıdır.
 - İlerleme `3 / 10` biçiminde görünür.
@@ -360,6 +390,8 @@ Her yorumda veri yılı ve kaynak gösterilir. Olumlu sinyaller, riskler ve beli
 | Geçmiş yıl verisi eksik | Eksik yıl belirtilir ve güven seviyesi düşürülür. |
 | Cevaplar çelişir | Son adımlardan biri çelişkiyi farklı senaryoyla kontrol eder. |
 | İki alan eşit çıkar | İki güçlü yön birlikte gösterilir; kullanıcı tek tipe zorlanmaz. |
+| Kullanıcı şehir dışında okumak istemez | Yalnızca yaşadığı şehirdeki programlar değerlendirilir. |
+| Kullanıcı Türkiye genelini değerlendirir | Şehir kesin filtre olmaz; diğer uyum sinyalleri öncelik kazanır. |
 | Hiçbir program açık kısıtları karşılamaz | Etkili kısıtlar açıklanır ve değiştirilebilir filtreler gösterilir. |
 | Veri kaynağı erişilemez | Son doğrulanmış veri tarihi gösterilir veya sonuç üretimi durdurulur. |
 | Önceki cevap değiştirilir | O noktadan sonraki yol yeniden oluşturulur. |
@@ -381,6 +413,10 @@ Soru ağırlıkları gerçek kullanım verileri ve uzman değerlendirmeleriyle s
 
 - Başlangıç ekranında iki ayrı YKS durumu butonu bulunmalıdır.
 - Kullanıcıya ayrıca “YKS sonucun belli mi?” sorusu sorulmamalıdır.
+- Şehir ve tercih koşulları her iki kullanıcı yolunda persona testinden önce alınmalıdır.
+- Şehir ve tercih koşulları 10 persona sorusuna dahil edilmemelidir.
+- Şehir dışında okumak istemeyen kullanıcı için yaşadığı şehir kesin filtre olmalıdır.
+- Kullanıcı tercih koşullarını değiştirerek önerileri yeniden hesaplayabilmelidir.
 - Her iki yol da tam olarak 10 adaptif soru göstermelidir.
 - Her soruda iki cevap seçeneği bulunmalıdır.
 - Her cevap sonraki soruyu ve persona skorunu etkilemelidir.
